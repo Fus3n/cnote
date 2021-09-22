@@ -96,6 +96,7 @@ namespace CNote
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
             this.cmdout = new FastColoredTextBoxNS.FastColoredTextBox();
             this.AutoCompMenu1 = new AutocompleteMenuNS.AutocompleteMenu();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menu_bar2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb_main)).BeginInit();
             this.editContext.SuspendLayout();
@@ -424,9 +425,6 @@ namespace CNote
             // fctb_main
             // 
             this.fctb_main.AllowSeveralTextStyleDrawing = true;
-            this.fctb_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.fctb_main.AutoCompleteBrackets = true;
             this.fctb_main.AutoCompleteBracketsList = new char[] {
         '(',
@@ -445,7 +443,6 @@ namespace CNote
             this.fctb_main.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
     "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
             this.fctb_main.AutoScrollMinSize = new System.Drawing.Size(29, 16);
-            this.fctb_main.AutoSize = true;
             this.fctb_main.BackBrush = null;
             this.fctb_main.CaretBlinking = false;
             this.fctb_main.CaretColor = System.Drawing.Color.LightCoral;
@@ -454,12 +451,13 @@ namespace CNote
             this.fctb_main.ContextMenuStrip = this.editContext;
             this.fctb_main.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fctb_main.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.fctb_main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctb_main.Font = new System.Drawing.Font("Courier New", 11.25F);
             this.fctb_main.Hotkeys = resources.GetString("fctb_main.Hotkeys");
             this.fctb_main.IsReplaceMode = false;
             this.fctb_main.LeftBracket = '(';
             this.fctb_main.LeftBracket2 = '{';
-            this.fctb_main.Location = new System.Drawing.Point(0, 24);
+            this.fctb_main.Location = new System.Drawing.Point(0, 0);
             this.fctb_main.Margin = new System.Windows.Forms.Padding(0);
             this.fctb_main.Name = "fctb_main";
             this.fctb_main.Paddings = new System.Windows.Forms.Padding(0);
@@ -468,8 +466,7 @@ namespace CNote
             this.fctb_main.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.fctb_main.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb_main.ServiceColors")));
             this.fctb_main.ShowFoldingLines = true;
-            this.fctb_main.ShowScrollBars = false;
-            this.fctb_main.Size = new System.Drawing.Size(939, 463);
+            this.fctb_main.Size = new System.Drawing.Size(939, 449);
             this.fctb_main.TabIndex = 2;
             this.fctb_main.ToolTipDelay = 200;
             this.fctb_main.Zoom = 100;
@@ -692,7 +689,7 @@ namespace CNote
             // 
             this.SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.SplitContainer.Location = new System.Drawing.Point(0, 25);
             this.SplitContainer.Name = "SplitContainer";
             this.SplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -706,8 +703,8 @@ namespace CNote
             // 
             this.SplitContainer.Panel2.Controls.Add(this.cmdout);
             this.SplitContainer.Panel2MinSize = 100;
-            this.SplitContainer.Size = new System.Drawing.Size(941, 613);
-            this.SplitContainer.SplitterDistance = 489;
+            this.SplitContainer.Size = new System.Drawing.Size(941, 566);
+            this.SplitContainer.SplitterDistance = 451;
             this.SplitContainer.TabIndex = 7;
             // 
             // cmdout
@@ -735,6 +732,7 @@ namespace CNote
             this.cmdout.ContextMenuStrip = this.cmdoutMenu;
             this.cmdout.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.cmdout.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.cmdout.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.cmdout.IsReplaceMode = false;
             this.cmdout.Location = new System.Drawing.Point(-1, 3);
             this.cmdout.Name = "cmdout";
@@ -742,7 +740,7 @@ namespace CNote
             this.cmdout.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.cmdout.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("cmdout.ServiceColors")));
             this.cmdout.ShowLineNumbers = false;
-            this.cmdout.Size = new System.Drawing.Size(937, 91);
+            this.cmdout.Size = new System.Drawing.Size(937, 107);
             this.cmdout.TabIndex = 1;
             this.cmdout.Zoom = 100;
             // 
@@ -760,14 +758,23 @@ namespace CNote
             this.AutoCompMenu1.SearchPattern = "\\w";
             this.AutoCompMenu1.TargetControlWrapper = null;
             // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(941, 566);
+            this.panel1.TabIndex = 8;
+            // 
             // NoteMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(941, 613);
+            this.Controls.Add(this.SplitContainer);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusOptions);
             this.Controls.Add(this.menu_bar2);
-            this.Controls.Add(this.SplitContainer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menu_bar2;
@@ -785,7 +792,6 @@ namespace CNote
             this.statusOptions.ResumeLayout(false);
             this.statusOptions.PerformLayout();
             this.SplitContainer.Panel1.ResumeLayout(false);
-            this.SplitContainer.Panel1.PerformLayout();
             this.SplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).EndInit();
             this.SplitContainer.ResumeLayout(false);
@@ -862,6 +868,7 @@ namespace CNote
         private FastColoredTextBoxNS.FastColoredTextBox cmdout;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutCNoteToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

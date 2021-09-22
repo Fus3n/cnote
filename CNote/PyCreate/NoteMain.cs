@@ -26,10 +26,9 @@ namespace CNote
     public partial class NoteMain : Form
     {
         private Process pProcess;
-
         
         private TextStyle greenstyle = new TextStyle(Brushes.Green, null, FontStyle.Bold);
-        private TextStyle graystyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
+        private TextStyle graystyle = new TextStyle(Brushes.Gray, null, FontStyle.Bold);
         private TextStyle pyPurple = new TextStyle(Brushes.MediumPurple, null, FontStyle.Bold);
         private TextStyle pyOrange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
         private TextStyle pyOrangeRed = new TextStyle(Brushes.OrangeRed, null, FontStyle.Bold);
@@ -39,7 +38,6 @@ namespace CNote
         //for python dynamic autocomplete
         //used to store items and remove them if they are removed from editor
         private List<string> NewAddedItems = new List<string>();
-
 
         private bool pyDoIndent; //python do auto indent if regex pattern found
         private bool TextChangedFCTB; //check if text changed used to add * in the title 
@@ -53,6 +51,8 @@ namespace CNote
         private string currFileName;
         private string currFilePath;
         private string[] args;
+
+        private List<string> lns;
 
 
         public NoteMain()
@@ -74,7 +74,10 @@ namespace CNote
 
         private void NoteMain_Load(object sender, EventArgs e)
         {
+            if (SplitContainer.Panel2Collapsed)
+            {
 
+            }
             cmdout.Zoom = 122;
             txt_file.Checked = true;
             languageChanger.Text = "Text File";
@@ -194,31 +197,56 @@ namespace CNote
             else
                 of.Filter = util.allFileFilter;
 
-
             if (of.ShowDialog() == DialogResult.OK)
             {
+
                 StreamReader sr = new StreamReader(of.FileName);
-
-
-                fctb_main.Text = sr.ReadToEnd();
-                sr.Close();
                 currFilePath = of.FileName;
-                currFileName = Path.GetFileName(of.FileName);
-                this.Text = currFileName + " - CNote";
-
+                currFileName = Path.GetFileName(currFilePath);
                 TextChangedFCTB = false;
                 validateLang();
+                fctb_main.Text = sr.ReadToEnd();
+                sr.Close();
+                FileSetup();
+
+            }
+        }
+
+        private void FileSetup()
+        {
+            validateLang();
+            this.Text = currFileName + " - CNote";
+
+            if (!txt_file.Checked)
+            {
                 fctb_main.SelectAll();
                 fctb_main.Cut();
                 fctb_main.Paste();
                 Clipboard.Clear();
                 SaveFileAll();
-                foreach (string line in fctb_main.Lines)
-                {
-                    PyDynamicAC(line + "\n");
-                }
 
             }
+
+            if (currFileName.EndsWith(".py"))
+            {
+
+                lns = fctb_main.Lines.ToList();
+
+                new Thread(() =>
+                {
+                    foreach (string line in lns)
+                    {
+                        PyDynamicAC(line + "\n");
+
+                    }
+                }).Start();
+
+
+            }
+
+
+            fctb_main.SelectionStart = 1;
+            SaveFileAll();
         }
 
 
@@ -231,20 +259,11 @@ namespace CNote
 
                 fctb_main.Text = sr.ReadToEnd();
                 sr.Close();
-
                 currFilePath = filename;
-
                 currFileName = Path.GetFileName(filename);
-
-                this.Text = currFileName + " - CNote";
-
+                sr.Close();
                 TextChangedFCTB = false;
-                validateLang();
-                fctb_main.SelectAll();
-                fctb_main.Cut();
-                fctb_main.Paste();
-                Clipboard.Clear();
-                SaveFileAll();
+                FileSetup();
 
             }
             catch
@@ -888,13 +907,14 @@ namespace CNote
             {
                 pProcess = new Process();
 
-
+          
                 string strCommand = util.GetSettings("pypath");
                 //strCommand is path and file name of command to run
                 pProcess.StartInfo.FileName = strCommand;
 
                 //strCommandParameters are parameters to pass to program
-                pProcess.StartInfo.Arguments = currFilePath;
+                pProcess.StartInfo.WorkingDirectory = Path.GetDirectoryName(currFilePath);
+                pProcess.StartInfo.Arguments = currFileName;
 
                 pProcess.StartInfo.UseShellExecute = false;
                 pProcess.StartInfo.RedirectStandardError = true;
@@ -923,6 +943,7 @@ namespace CNote
                     {
                         cmdout.Text = strOutput;
                         cmdout.GoEnd();
+                       
 
 
 
@@ -938,7 +959,7 @@ namespace CNote
 
             catch
             {
-
+   
             }
 
         }
@@ -1009,7 +1030,11 @@ namespace CNote
 
             if (isPythonLang)// check if python language selected or python file opened
             {
+                PyDynamicAC(e.ChangedRange.Text);
+                
+
                 PythonSynHighligt(e); //custom syn highlight ofc
+                
 
                 if (e.ChangedRange.Text.EndsWith("):")) //Find ':' for pythons auto indent
                 {
@@ -1030,9 +1055,11 @@ namespace CNote
 
             Match result_var = Regex.Match(e, @"(\b[a-zA-Z]+)(\s?=)"); // find any value before '='
 
-            Match result_import = Regex.Match(e, @"\bimport\s([a-zA-Z]+)\s?\n$"); // find any value after 'import'
+            Match result_import = Regex.Match(e, @"\bimport\s([a-zA-Z_0-9]+)\s?"); // find any value after 'import'
 
-            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z]+)\s"); // find any value after 'from'
+            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z_0-9]+)\s"); // find any value after 'from'
+
+            Match result_as = Regex.Match(e, @"\bas\s([a-zA-Z_0-9]*)"); // find any value after 'as'
 
             //Find variables
             if (result_var.Success)
@@ -1068,13 +1095,25 @@ namespace CNote
             }
 
 
+            //find as
+            if (result_as.Success)
+            {
+                var str = result_as.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                    NewAddedItems.Add(str);
+                    AutoCompMenu1.AddItem(str);
+                } 
+            }
+
+
             if (NewAddedItems.Count != 0)
             {
 
                 //Removing values/variables from autocompletemenu that where removed from file Dynamicly
                 foreach (var it in NewAddedItems)
                 {
-                    if (AutoCompMenu1.Items.Contains(it) && !fctb_main.Text.Contains(it)) //if value contains in autocompmenu and not in editor
+                    if (AutoCompMenu1.Items.Contains(it) && !fctb_main.Text.Contains(it) && !string.IsNullOrWhiteSpace("it")) //if value contains in autocompmenu and not in editor
                     {
                         // reinserting values to AutocompMenu array without removed values
                         List<string> newl = new List<string>(); //temp list of string 
@@ -1101,7 +1140,7 @@ namespace CNote
             Regex reg = new Regex(@"#.*$", RegexOptions.Multiline);
             Regex reg_func = new Regex(@"\.([a-zA-Z]+(\(\))?)", RegexOptions.Multiline);
 
-            PyDynamicAC(e.ChangedRange.Text);
+            
 
 
             e.ChangedRange.ClearStyle(graystyle);

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
 
 namespace CNote
 {
@@ -15,9 +14,9 @@ namespace CNote
 
         public string pyHLSecOrange = @"\b(and|is|in|or)\b";
 
-        public string pyHLSecOrangeRed = @"\b(True|False|global)\b";
+        public string pyHLSecOrangeRed = @"\b(True|False|global|self(\.?))\b";
 
-        public string pyHLSecFuncs = @"\b(abs|pow|ord|open|eval|repr|reversed|round|set|setattr|format|slice|sorted|object|staticmethod|str|sum|tuple|str|bin|bytes|bytearray|hex|input|min|max|next|zip|len|map|types|vars|range|enumerate|round|compile|memroyview|del|group)\b";
+        public string pyHLSecFuncs = @"\b(abs|pow|ord|open|eval|repr|reversed|round|set|setattr|format|slice|sorted|object|staticmethod|str|sum|tuple|str|bin|bytes|bytearray|hex|input|min|max|next|zip|len|map|types|vars|range|enumerate|round|compile|memroyview|del|group|super|__(\w+)__)\b";
 
         public string pyHLstr = "(\'(.*?)\'|\"(.*?)\")";
 
@@ -31,7 +30,8 @@ namespace CNote
         //Python Autocomplete items
         public string[] python_items = { "import", "from", "if", "else", "while", "True", "False", "pass", "global", "as", "not", "del", "break", "print", "class", "continue", "raise", "return", "finally", "def", "lambda", "try", "except", "yield", "assert", "with", "open", "as", "in", "and", "or",
                                         "abs()","bytes","classmethod()","chr","dict","compile()","dir","eval()","enumerate()","exec()","filter","float","format","forzenset","bytearray()","bool","bin","ascii","any","all","getattr","globals","hasattr","hex","input","int","isinstance","list","len()","iter","locals","map","max",
-                                        "memroyview","min","next()","object","oct","ord","pow","math","property","range","repr","reversed","round","set","setattr","slice","sorted()","staticmethod","str","sum","super","tuple","types","vars","zip",};
+                                        "memroyview","min","next()","object","oct","ord","pow","math","property","range","repr","reversed","round","set","setattr","slice","sorted()","staticmethod","str","sum","super","tuple","types","vars","zip","__init__(self)","init","__repr__","__getitem__","__module__","__name__","__file__","__dict__","__package__","__annotations__",
+                                         "__slots__","__hash__","__nonzero__","__bool__","__next__"};
 
 
         //HTML Autocomplete items
@@ -40,7 +40,6 @@ namespace CNote
                                          "link","main","map","mark","meta","nav","noframes","noscript","ol","optgroup","option","output","p","param","picture","pre","progress","q","rp","rt","ruby","s","samp","script","section","select","small","source","span","strike","strong","style=","sub","svg","table","tbody",
                                         "td","template","textarea","tfoot","thread","title","tr","track","tt","u","ul","var","video","wbr","alt=","width=","height=","ismap","longdesc","loading","sizes","srcset","usemap=","autoplay","controls","loop","muted","poster","preload","autofocus","disabled","formaction","formenctype",
                                          "formmethod","formnovalidate","formtarget","name=","type=","value=","id=\"\"","for=","method=","action=\"\"","checked=","autocomplete=","row=","colspan=","size=","wrap=","hard","href=","cords=","shape=","step=","start=","target=","sandbox","rowspan="};
-
         
         
         //ADD or Update settings
@@ -178,7 +177,6 @@ namespace CNote
 
             return "";
         }
-
 
     }
 }

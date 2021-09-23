@@ -1,4 +1,14 @@
-﻿using Microsoft.Win32;
+﻿/*
+ Copyright 2021 Fusen
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +20,7 @@ namespace CNote
     {
         public string allFileFilter = "Any File|*.*| Python File |*.py|CSharp File |*.cs| HTML File |*.html | PHP File |*.php|XML File |*.xml|SQL File |*.sql|LUA File |*.lua|JavaScript File |*.js*";
 
-        public string pyHLmains = @"\b(del|from|not|while|as|elif|or|with|assert|else|if|pass|yield|break|except|import|print|class|raise|continue|finally|return|def|for|lambda|try|as|globals|dict|list|sorted|format|filter|float|int|exec|except)\b";
+        public string pyHLmains = @"\b(del|from|not|while|as|elif|or|with|assert|else|if|pass|yield|break|except|import|print|class|raise|continue|finally|return|def|for|lambda|try|as|globals|dict|list|sorted|format|filter|float|int|exec|except|bool)\b";
 
         public string pyHLSecOrange = @"\b(and|is|in|or)\b";
 
@@ -30,8 +40,10 @@ namespace CNote
         //Python Autocomplete items
         public string[] python_items = { "import", "from", "if", "else", "while", "True", "False", "pass", "global", "as", "not", "del", "break", "print", "class", "continue", "raise", "return", "finally", "def", "lambda", "try", "except", "yield", "assert", "with", "open", "as", "in", "and", "or",
                                         "abs()","bytes","classmethod()","chr","dict","compile()","dir","eval()","enumerate()","exec()","filter","float","format","forzenset","bytearray()","bool","bin","ascii","any","all","getattr","globals","hasattr","hex","input","int","isinstance","list","len()","iter","locals","map","max",
-                                        "memroyview","min","next()","object","oct","ord","pow","math","property","range","repr","reversed","round","set","setattr","slice","sorted()","staticmethod","str","sum","super","tuple","types","vars","zip","__init__(self)","init","__repr__","__getitem__","__module__","__name__","__file__","__dict__","__package__","__annotations__",
-                                         "__slots__","__hash__","__nonzero__","__bool__","__next__"};
+                                        "memroyview","min","next()","object","oct","ord","pow","math","property","range","repr","reversed","round","set","setattr","slice","sorted()","staticmethod","str","sum","super","tuple","types","vars","zip","__init__(self)","init","__repr__","__doc__","__getitem__","__module__","__name__","__file__","__dict__","__package__","__annotations__",
+                                         "__slots__","__hash__","__nonzero__","__bool__","__next__","__qualname__","__defaults__","__code__","__globals__","__closure__","__kwdefaults__","__new__","__del__","__str__","","__bytes__","__format__","__lt__","__le__","__eq__","__ne__","__gt__","__ge__","__add__","__sub__","__mul__","__matmul__","__truediv__","__floordiv__","__abs__","__float__",
+                                          "__complex__","__round__","__trunc__","__ceil__","__floor__","__len__","__setitem__","__delitem__","__iter__","__floordiv__","__mod__","__truediv__","__pow__","__lshift__","__rshift__","__and__","__xor__","__or__","__iadd__","__isub__","__imul__","__idiv__","__ifloordiv__","__imod__","__ipow__","__iand__","__neg__","__pos__","__invert__","__int__","__long__","__float__","__oct__","__hex__"};
+
 
 
         //HTML Autocomplete items

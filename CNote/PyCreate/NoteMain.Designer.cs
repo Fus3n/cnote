@@ -52,6 +52,8 @@ namespace CNote
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.commentSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.run_tools_parent = new System.Windows.Forms.ToolStripMenuItem();
             this.run_tools = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +61,7 @@ namespace CNote
             this.showOutPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.option_tools = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.theme_colorstrip = new System.Windows.Forms.ToolStripMenuItem();
             this.darkm_toggle = new System.Windows.Forms.ToolStripMenuItem();
             this.lightm_toggle = new System.Windows.Forms.ToolStripMenuItem();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,10 +71,16 @@ namespace CNote
             this.aboutCNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fctb_main = new FastColoredTextBoxNS.FastColoredTextBox();
             this.editContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.cutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.opencnt_folder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.run_strip_menu = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdoutMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmdoutSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdout_cpy = new System.Windows.Forms.ToolStripMenuItem();
@@ -219,7 +227,9 @@ namespace CNote
             this.toolStripSeparator2,
             this.findToolStripMenuItem,
             this.goToToolStripMenuItem,
-            this.replaceToolStripMenuItem});
+            this.replaceToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.commentSelectedToolStripMenuItem});
             this.edit_tools.Name = "edit_tools";
             this.edit_tools.Size = new System.Drawing.Size(42, 21);
             this.edit_tools.Text = "Edit";
@@ -299,6 +309,19 @@ namespace CNote
             this.replaceToolStripMenuItem.Text = "Replace";
             this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(182, 6);
+            // 
+            // commentSelectedToolStripMenuItem
+            // 
+            this.commentSelectedToolStripMenuItem.Name = "commentSelectedToolStripMenuItem";
+            this.commentSelectedToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.commentSelectedToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.commentSelectedToolStripMenuItem.Text = "Comment";
+            this.commentSelectedToolStripMenuItem.Click += new System.EventHandler(this.commentSelectedToolStripMenuItem_Click);
+            // 
             // run_tools_parent
             // 
             this.run_tools_parent.BackColor = System.Drawing.Color.Transparent;
@@ -338,14 +361,16 @@ namespace CNote
             // showOutPanel
             // 
             this.showOutPanel.Name = "showOutPanel";
-            this.showOutPanel.Size = new System.Drawing.Size(191, 22);
+            this.showOutPanel.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.showOutPanel.Size = new System.Drawing.Size(235, 22);
             this.showOutPanel.Text = "Output Panel";
             this.showOutPanel.Click += new System.EventHandler(this.showOutPanel_Click);
             // 
             // zoomToolStripMenuItem
             // 
             this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.zoomToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.zoomToolStripMenuItem.Text = "Reset Default Zoom";
             this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
             // 
@@ -353,7 +378,7 @@ namespace CNote
             // 
             this.option_tools.BackColor = System.Drawing.Color.Transparent;
             this.option_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.backgroundColorToolStripMenuItem,
+            this.theme_colorstrip,
             this.fontToolStripMenuItem,
             this.wrap_tool,
             this.languagePreferenceToolStripMenuItem});
@@ -361,14 +386,14 @@ namespace CNote
             this.option_tools.Size = new System.Drawing.Size(66, 21);
             this.option_tools.Text = "Options";
             // 
-            // backgroundColorToolStripMenuItem
+            // theme_colorstrip
             // 
-            this.backgroundColorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.theme_colorstrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.darkm_toggle,
             this.lightm_toggle});
-            this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
-            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.backgroundColorToolStripMenuItem.Text = "Theme";
+            this.theme_colorstrip.Name = "theme_colorstrip";
+            this.theme_colorstrip.Size = new System.Drawing.Size(199, 22);
+            this.theme_colorstrip.Text = "Theme";
             // 
             // darkm_toggle
             // 
@@ -424,6 +449,7 @@ namespace CNote
             // 
             // fctb_main
             // 
+            this.fctb_main.AllowMacroRecording = false;
             this.fctb_main.AllowSeveralTextStyleDrawing = true;
             this.fctb_main.AutoCompleteBrackets = true;
             this.fctb_main.AutoCompleteBracketsList = new char[] {
@@ -441,13 +467,15 @@ namespace CNote
         '>'};
             this.AutoCompMenu1.SetAutocompleteMenu(this.fctb_main, this.AutoCompMenu1);
             this.fctb_main.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
-    "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
+    "*(?<range>:)\\s*(?<range>[^;]+);\r\n\\b[a-zA-z0-9_]+(:|\\(\\):);\r\n";
             this.fctb_main.AutoScrollMinSize = new System.Drawing.Size(29, 16);
             this.fctb_main.BackBrush = null;
+            this.fctb_main.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
             this.fctb_main.CaretBlinking = false;
             this.fctb_main.CaretColor = System.Drawing.Color.LightCoral;
             this.fctb_main.CharHeight = 16;
             this.fctb_main.CharWidth = 9;
+            this.fctb_main.CommentPrefix = "";
             this.fctb_main.ContextMenuStrip = this.editContext;
             this.fctb_main.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fctb_main.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
@@ -471,49 +499,93 @@ namespace CNote
             this.fctb_main.ToolTipDelay = 200;
             this.fctb_main.Zoom = 100;
             this.fctb_main.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.fctb_main_TextChanged);
+            this.fctb_main.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(this.fctb_main_KeyPressed);
             this.fctb_main.ZoomChanged += new System.EventHandler(this.fctb_main_ZoomChanged);
             this.fctb_main.Click += new System.EventHandler(this.fctb_main_Click);
             this.fctb_main.DragDrop += new System.Windows.Forms.DragEventHandler(this.fctb_main_DragDrop);
+            this.fctb_main.DragEnter += new System.Windows.Forms.DragEventHandler(this.fctb_main_DragEnter);
+            this.fctb_main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fctb_main_KeyDown);
             this.fctb_main.KeyUp += new System.Windows.Forms.KeyEventHandler(this.fctb_main_KeyUp);
             // 
             // editContext
             // 
             this.editContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectAllToolStripMenuItem,
+            this.undoToolStripMenuItem1,
+            this.toolStripSeparator5,
             this.cutToolStripMenuItem1,
             this.copyToolStripMenuItem1,
-            this.pasteToolStripMenuItem1});
+            this.pasteToolStripMenuItem1,
+            this.toolStripSeparator6,
+            this.selectAllToolStripMenuItem,
+            this.opencnt_folder,
+            this.toolStripSeparator7,
+            this.run_strip_menu});
             this.editContext.Name = "contextMenuStrip1";
-            this.editContext.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.editContext.Size = new System.Drawing.Size(123, 92);
+            this.editContext.Size = new System.Drawing.Size(202, 176);
             // 
-            // selectAllToolStripMenuItem
+            // undoToolStripMenuItem1
             // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.selectAllToolStripMenuItem.Text = "Select All";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            this.undoToolStripMenuItem1.Name = "undoToolStripMenuItem1";
+            this.undoToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
+            this.undoToolStripMenuItem1.Text = "Undo";
+            this.undoToolStripMenuItem1.Click += new System.EventHandler(this.undoToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(198, 6);
             // 
             // cutToolStripMenuItem1
             // 
             this.cutToolStripMenuItem1.Name = "cutToolStripMenuItem1";
-            this.cutToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.cutToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
             this.cutToolStripMenuItem1.Text = "Cut";
             this.cutToolStripMenuItem1.Click += new System.EventHandler(this.cutToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem1
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
             this.copyToolStripMenuItem1.Text = "Copy";
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // pasteToolStripMenuItem1
             // 
             this.pasteToolStripMenuItem1.Name = "pasteToolStripMenuItem1";
-            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
             this.pasteToolStripMenuItem1.Text = "Paste";
             this.pasteToolStripMenuItem1.Click += new System.EventHandler(this.pasteToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(198, 6);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // opencnt_folder
+            // 
+            this.opencnt_folder.Name = "opencnt_folder";
+            this.opencnt_folder.Size = new System.Drawing.Size(201, 22);
+            this.opencnt_folder.Text = "Open Containing Folder";
+            this.opencnt_folder.Click += new System.EventHandler(this.opencnt_folder_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(198, 6);
+            // 
+            // run_strip_menu
+            // 
+            this.run_strip_menu.Name = "run_strip_menu";
+            this.run_strip_menu.Size = new System.Drawing.Size(201, 22);
+            this.run_strip_menu.Text = "Run";
+            this.run_strip_menu.Click += new System.EventHandler(this.run_strip_menu_Click);
             // 
             // cmdoutMenu
             // 
@@ -781,7 +853,7 @@ namespace CNote
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "NoteMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CNote Pad";
+            this.Text = "CNote";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NoteMain_FormClosing);
             this.Load += new System.EventHandler(this.NoteMain_Load);
             this.menu_bar2.ResumeLayout(false);
@@ -816,7 +888,7 @@ namespace CNote
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem option_tools;
-        private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem theme_colorstrip;
         private System.Windows.Forms.ToolStripMenuItem darkm_toggle;
         private System.Windows.Forms.ToolStripMenuItem lightm_toggle;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
@@ -869,6 +941,14 @@ namespace CNote
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutCNoteToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem opencnt_folder;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem run_strip_menu;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem commentSelectedToolStripMenuItem;
     }
 }
 

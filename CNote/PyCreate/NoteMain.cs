@@ -25,14 +25,20 @@ namespace CNote
 
     public partial class NoteMain : Form
     {
+
+        //total all files 1775 lines
         private Process pProcess;
-        
+
         private TextStyle greenstyle = new TextStyle(Brushes.Green, null, FontStyle.Bold);
         private TextStyle graystyle = new TextStyle(Brushes.Gray, null, FontStyle.Bold);
         private TextStyle pyPurple = new TextStyle(Brushes.MediumPurple, null, FontStyle.Bold);
         private TextStyle pyOrange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
         private TextStyle pyOrangeRed = new TextStyle(Brushes.OrangeRed, null, FontStyle.Bold);
         private TextStyle pyBlue = new TextStyle(Brushes.CornflowerBlue, null, FontStyle.Bold);
+
+        private TextStyle pyLightGreen = new TextStyle(Brushes.DarkCyan, null, FontStyle.Bold);
+        private TextStyle pyclassorange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
+
 
 
         //for python dynamic autocomplete
@@ -45,14 +51,22 @@ namespace CNote
 
         private HTMLPreview hm = new HTMLPreview();
         private Thread proc_thread;//Python Procces Thread
-        CNoteUtils util; 
+        CNoteUtils util;
 
         string strOutput;
         private string currFileName;
         private string currFilePath;
         private string[] args;
 
+        private bool isctrlDown = false;
+
         private List<string> lns;
+        private bool isProccesRunning;
+
+        Regex reg = new Regex(@"#.*$", RegexOptions.Multiline);
+        Regex reg_func = new Regex(@"\.([a-zA-Z0-9_]+(\(\))?)", RegexOptions.Multiline);
+        Regex reg_user_func = new Regex(@"\bdef\s([a-zA-Z0-9_]+)", RegexOptions.Multiline);
+        Regex reg_user_class = new Regex(@"\bclass\s([a-zA-Z0-9_]+)", RegexOptions.Multiline);
 
 
         public NoteMain()
@@ -69,11 +83,15 @@ namespace CNote
         public void intitThread()
         {
             proc_thread = new Thread(startCmdPython);
+            isProccesRunning = false;
         }
 
 
         private void NoteMain_Load(object sender, EventArgs e)
         {
+            opencnt_folder.Enabled = false;
+            run_strip_menu.Enabled = false;
+
             if (SplitContainer.Panel2Collapsed)
             {
 
@@ -214,6 +232,7 @@ namespace CNote
 
         private void FileSetup()
         {
+            opencnt_folder.Enabled = true;
             validateLang();
             this.Text = currFileName + " - CNote";
 
@@ -264,7 +283,6 @@ namespace CNote
                 sr.Close();
                 TextChangedFCTB = false;
                 FileSetup();
-
             }
             catch
             {
@@ -316,7 +334,6 @@ namespace CNote
         //saves file :)
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             SaveFileAll();
         }
 
@@ -386,14 +403,8 @@ namespace CNote
                 sw.Close();
                 currFilePath = of.FileName;
                 currFileName = Path.GetFileName(of.FileName);
-                this.Text = currFileName + " - CNote";
-                validateLang();
-
-                fctb_main.SelectAll();
-                fctb_main.Cut();
-                fctb_main.Paste();
-                Clipboard.Clear();
-                SaveFileAll();
+                TextChangedFCTB = false;
+                FileSetup();
             }
         }
 
@@ -463,10 +474,15 @@ namespace CNote
             fctb_main.ForeColor = Color.FromArgb(0, 0, 0);
             fctb_main.IndentBackColor = Color.WhiteSmoke;
             cmdout.BackColor = Color.WhiteSmoke;
+            AutoCompMenu1.Colors.BackColor = Color.WhiteSmoke;
 
             menu_bar2.BackColor = Color.FromArgb(254, 251, 243);
             menu_bar2.ForeColor = Color.FromArgb(0, 0, 0);
             cmdout.ForeColor = Color.Black;
+
+            AutoCompMenu1.Colors.ForeColor = Color.Black;
+            AutoCompMenu1.Colors.HighlightingColor = Color.DarkOrange;
+
 
 
             foreach (ToolStripMenuItem item in menu_bar2.Items)
@@ -476,6 +492,13 @@ namespace CNote
                     a.BackColor = Color.White;
                     a.ForeColor = Color.Black;
                 }
+            }
+
+
+            foreach (ToolStripItem item in theme_colorstrip.DropDownItems)
+            {
+                item.BackColor = Color.White;
+                item.ForeColor = Color.Black;
             }
 
             menu_bar2.Renderer = new ToolBarTheme_Light();
@@ -493,10 +516,16 @@ namespace CNote
             fctb_main.IndentBackColor = Color.FromArgb(23, 16, 16);
             menu_bar2.BackColor = Color.FromArgb(23, 16, 16);
             cmdout.BackColor = Color.FromArgb(23, 16, 16);
+            AutoCompMenu1.Colors.BackColor = Color.FromArgb(44, 57, 75);
 
             fctb_main.ForeColor = Color.FromArgb(254, 251, 243);
             menu_bar2.ForeColor = Color.FromArgb(254, 251, 243);
             cmdout.ForeColor = Color.LightSteelBlue;
+
+            AutoCompMenu1.Colors.ForeColor = Color.LightSteelBlue;
+            AutoCompMenu1.Colors.HighlightingColor = Color.White;
+
+
 
 
 
@@ -506,7 +535,16 @@ namespace CNote
                 {
                     a.BackColor = Color.FromArgb(23, 16, 16);
                     a.ForeColor = Color.FromArgb(254, 251, 243);
+
+
                 }
+
+            }
+
+            foreach (ToolStripItem item in theme_colorstrip.DropDownItems)
+            {
+                item.BackColor = Color.FromArgb(23, 16, 16);
+                item.ForeColor = Color.FromArgb(254, 251, 243);
             }
 
             menu_bar2.Renderer = new ToolBarTheme_Dark();
@@ -613,7 +651,6 @@ namespace CNote
 
         void autocheckstrip(object sender)
         {
-
             List<ToolStripMenuItem> items = new List<ToolStripMenuItem>();
 
             foreach (var it in languageChanger.DropDownItems)
@@ -632,11 +669,13 @@ namespace CNote
             {
                 item.Checked = false;
             }
-
+         
              ((ToolStripMenuItem)sender).Checked = true;
 
         }
 
+
+        //Change Syntext Highlighting and autocomplete list to respective selected language
         private void python_lang_Click(object sender, EventArgs e)
         {
             autocheckstrip(sender);
@@ -645,10 +684,10 @@ namespace CNote
             languageChanger.Text = "Python";
             AutoCompMenu1.Enabled = true;
             AutoCompMenu1.Items = util.python_items;
+            run_strip_menu.Enabled = true;
+            fctb_main.CommentPrefix = "#";
         }
 
-
-        //Change Syntext Highlighting and autocomplete list to respective selected language
         private void cshapr_lang_Click(object sender, EventArgs e)
         {
             autocheckstrip(sender);
@@ -657,6 +696,8 @@ namespace CNote
             languageChanger.Text = "#C";
             AutoCompMenu1.Enabled = true;
             AutoCompMenu1.Items = util.cshapr_items;
+            run_strip_menu.Enabled = false;
+            fctb_main.CommentPrefix = "//";
         }
 
         private void vb_lang_Click(object sender, EventArgs e)
@@ -666,6 +707,8 @@ namespace CNote
             fctb_main.Language = Language.VB;
             languageChanger.Text = "VB";
             AutoCompMenu1.Enabled = false;
+            run_strip_menu.Enabled = false;
+            fctb_main.CommentPrefix = "' ";
         }
 
         private void php_lang_Click(object sender, EventArgs e)
@@ -674,7 +717,9 @@ namespace CNote
             resetCustoms();
             fctb_main.Language = Language.PHP;
             languageChanger.Text = "PHP";
+            run_strip_menu.Enabled = false;
             AutoCompMenu1.Enabled = false;
+            fctb_main.CommentPrefix = "//";
         }
 
         private void html_lang_Click(object sender, EventArgs e)
@@ -685,6 +730,8 @@ namespace CNote
             languageChanger.Text = "HTML";
             AutoCompMenu1.Enabled = true;
             AutoCompMenu1.Items = util.html_items;
+            run_strip_menu.Enabled = true;
+            fctb_main.CommentPrefix = "<!--";
 
         }
 
@@ -694,7 +741,9 @@ namespace CNote
             resetCustoms();
             fctb_main.Language = Language.XML;
             languageChanger.Text = "XML";
+            run_strip_menu.Enabled = false;
             AutoCompMenu1.Enabled = false;
+            fctb_main.CommentPrefix = "";
         }
 
         private void lua_lang_Click(object sender, EventArgs e)
@@ -703,7 +752,9 @@ namespace CNote
             resetCustoms();
             fctb_main.Language = Language.Lua;
             languageChanger.Text = "Lua";
+            run_strip_menu.Enabled = false;
             AutoCompMenu1.Enabled = false;
+            fctb_main.CommentPrefix = "--";
         }
 
         private void sql_lang_Click(object sender, EventArgs e)
@@ -712,7 +763,9 @@ namespace CNote
             resetCustoms();
             fctb_main.Language = Language.SQL;
             languageChanger.Text = "SQL";
+            run_strip_menu.Enabled = false;
             AutoCompMenu1.Enabled = false;
+            fctb_main.CommentPrefix = "--";
         }
 
         private void js_lang_Click(object sender, EventArgs e)
@@ -721,7 +774,9 @@ namespace CNote
             resetCustoms();
             fctb_main.Language = Language.JS;
             languageChanger.Text = "JavaScript";
+            run_strip_menu.Enabled = false;
             AutoCompMenu1.Enabled = false;
+            fctb_main.CommentPrefix = "//";
         }
 
         private void txt_file_Click(object sender, EventArgs e)
@@ -730,9 +785,10 @@ namespace CNote
             resetCustoms();
             fctb_main.Language = Language.Custom;
             languageChanger.Text = "Text File";
+            run_strip_menu.Enabled = false;
             AutoCompMenu1.Enabled = false;
+            fctb_main.CommentPrefix = "";
         }
-
 
 
 
@@ -748,6 +804,8 @@ namespace CNote
                     languageChanger.Text = "C#";
                     AutoCompMenu1.Enabled = true;
                     AutoCompMenu1.Items = util.cshapr_items;
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "//";
                     break;
                 case ".py":
                     autocheckstrip(python_lang);
@@ -756,19 +814,22 @@ namespace CNote
                     languageChanger.Text = "Python";
                     AutoCompMenu1.Enabled = true;
                     AutoCompMenu1.Items = util.python_items;
+                    fctb_main.CommentPrefix = "#";
                     foreach (string line in fctb_main.Lines)
                     {
                         PyDynamicAC(line);
                     }
+                    run_strip_menu.Enabled = true;
                     break;
-
+                   
                 case ".xml":
                     autocheckstrip(xml_lang);
                     resetCustoms();
                     fctb_main.Language = Language.XML;
                     languageChanger.Text = "XML";
                     AutoCompMenu1.Enabled = false;
-
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "";
                     break;
 
 
@@ -779,7 +840,8 @@ namespace CNote
                     languageChanger.Text = "HTML";
                     AutoCompMenu1.Enabled = true;
                     AutoCompMenu1.Items = util.html_items;
-
+                    run_strip_menu.Enabled = true;
+                    fctb_main.CommentPrefix = "<!---->";
                     break;
 
                 case ".sql":
@@ -788,7 +850,8 @@ namespace CNote
                     fctb_main.Language = Language.SQL;
                     languageChanger.Text = "SQL";
                     AutoCompMenu1.Enabled = false;
-
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "--";
                     break;
 
                 case ".lua":
@@ -797,7 +860,8 @@ namespace CNote
                     fctb_main.Language = Language.Lua;
                     languageChanger.Text = "Lua";
                     AutoCompMenu1.Enabled = false;
-
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "--";
                     break;
 
                 case ".js":
@@ -806,6 +870,8 @@ namespace CNote
                     fctb_main.Language = Language.JS;
                     languageChanger.Text = "JavaScript";
                     AutoCompMenu1.Enabled = false;
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "//";
 
                     break;
 
@@ -815,7 +881,18 @@ namespace CNote
                     fctb_main.Language = Language.VB;
                     languageChanger.Text = "VB";
                     AutoCompMenu1.Enabled = false;
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "' ";
+                    break;
 
+                case ".php":
+                    autocheckstrip(vb_lang);
+                    resetCustoms();
+                    fctb_main.Language = Language.VB;
+                    languageChanger.Text = "VB";
+                    AutoCompMenu1.Enabled = false;
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "//";
                     break;
 
                 case ".txt":
@@ -824,10 +901,19 @@ namespace CNote
                     fctb_main.Language = Language.Custom;
                     languageChanger.Text = "Text File";
                     AutoCompMenu1.Enabled = false;
-
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "";
                     break;
 
-
+                default:
+                    autocheckstrip(txt_file);
+                    resetCustoms();
+                    fctb_main.Language = Language.Custom;
+                    languageChanger.Text = "Text File";
+                    AutoCompMenu1.Enabled = false;
+                    run_strip_menu.Enabled = false;
+                    fctb_main.CommentPrefix = "";
+                    break;
             }
 
         }
@@ -836,13 +922,21 @@ namespace CNote
         //Get basic info for statusStrip
         private string GetEditInfo()
         {
-            var info = $"Line {fctb_main.Selection.FromLine + 1} Zoom {fctb_main.Zoom}";
-            return info;
+            return $"Line {fctb_main.Selection.FromLine + 1} Zoom {fctb_main.Zoom}";
+
         }
 
 
         //Run File is Runnable
         private void run_tools_Click_1(object sender, EventArgs e)
+        {
+            
+            RunClicked();
+            stat_txt.Text = GetEditInfo();
+
+        }
+
+        private void RunClicked()
         {
             if (fctb_main.Language == Language.HTML)
             {
@@ -893,12 +987,11 @@ namespace CNote
                 }
                 else
                     SaveDlg();
-                
+
 
             }
 
         }
-
 
         //Run Python File
         private void startCmdPython()
@@ -907,7 +1000,7 @@ namespace CNote
             {
                 pProcess = new Process();
 
-          
+
                 string strCommand = util.GetSettings("pypath");
                 //strCommand is path and file name of command to run
                 pProcess.StartInfo.FileName = strCommand;
@@ -925,7 +1018,25 @@ namespace CNote
 
                 pProcess.StartInfo.CreateNoWindow = true;
 
+                //Recive Output at runtime currently not working
+                /*
+                pProcess.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        
+                        if (e.Data != null)
+                            cmdout.Text += e.Data.ToString() + "\n";
+                    });
+                });
 
+                pProcess.BeginOutputReadLine();
+
+
+                pProcess.ErrorDataReceived += pProcess_ErrorDataReceived;
+                pProcess.BeginErrorReadLine();
+
+                */
 
                 //Start the process
                 pProcess.Start();
@@ -943,27 +1054,36 @@ namespace CNote
                     {
                         cmdout.Text = strOutput;
                         cmdout.GoEnd();
-                       
-
 
 
                     }
 
                 });
+
                 pProcess.Kill();
-
-
                 pProcess.WaitForExit();
 
             }
 
             catch
             {
-   
+                //e
             }
 
         }
 
+        private void pProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                if (!string.IsNullOrEmpty(strOutput))
+                {
+                    cmdout.Text = e.Data;
+                }
+
+            });
+
+        }
 
         private void pProcess_Exited(object sender, EventArgs e)
         {
@@ -972,15 +1092,26 @@ namespace CNote
 
         private void stop_proc()
         {
-            this.Invoke((MethodInvoker)delegate
+            try
             {
-                if (pProcess.HasExited == false)
-                    pProcess.Kill();
-                cmdout.Text += $"Procces Exited with Code {pProcess.ExitCode}";
+                this.Invoke((MethodInvoker)delegate
+                {
+                    if (pProcess.HasExited == false)
+                        pProcess.Kill();
+                    cmdout.Text += $"Procces Exited with Code {pProcess.ExitCode}";
+                    
+                    intitThread();
 
-                intitThread();
+                });
 
-            });
+            }
+            catch
+            {
+                //pass
+            }
+
+            stat_txt.Text = GetEditInfo();
+
         }
 
         // Get Info in StatusTool
@@ -1031,35 +1162,40 @@ namespace CNote
             if (isPythonLang)// check if python language selected or python file opened
             {
                 PyDynamicAC(e.ChangedRange.Text);
-                
+
 
                 PythonSynHighligt(e); //custom syn highlight ofc
-                
 
-                if (e.ChangedRange.Text.EndsWith("):")) //Find ':' for pythons auto indent
+                Match result_indent = Regex.Match(e.ChangedRange.Text, @"\b[a-zA-z0-9_]+(:|\([a-zA-Z0-9_,\+:\->]*\):$)");//Find ':' or ':()' for pythons auto indent
+
+
+                if (result_indent.Success)
                 {
                     pyDoIndent = true;
                 }
 
+
             }
         }
-
 
 
         //adding value to autocomplete dynamicly
         private void PyDynamicAC(string e)
         {
 
+            //Match result_var = Regex.Match(e, @"(^.*?(?=\=)"); // find any string before '='
 
-            //Match result_var = Regex.Match(e, @"(^.*?(?=\=)"); // find any value before '='
+            Match result_var = Regex.Match(e, @"(\b[a-zA-Z_]+)(\s?=)"); // find any string before '='
 
-            Match result_var = Regex.Match(e, @"(\b[a-zA-Z]+)(\s?=)"); // find any value before '='
+            Match result_import = Regex.Match(e, @"\bimport\s([a-zA-Z_0-9_]+)\s"); // find any value string 'import'
 
-            Match result_import = Regex.Match(e, @"\bimport\s([a-zA-Z_0-9]+)\s?"); // find any value after 'import'
+            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z_0-9_]+)\s"); // find any value string 'from'
 
-            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z_0-9]+)\s"); // find any value after 'from'
+            Match result_as = Regex.Match(e, @"\bas\s([a-zA-Z_0-9_]*)\s"); // find any value string 'as'
 
-            Match result_as = Regex.Match(e, @"\bas\s([a-zA-Z_0-9]*)"); // find any value after 'as'
+            Match result_func = Regex.Match(e, @"\bdef\s([a-zA-Z0-9_]+)\(\)"); // find any value string 'def'
+
+            Match result_class = Regex.Match(e, @"\bclass\s([a-zA-Z0-9_]+)(:|\(\))"); // find any string after 'class'
 
             //Find variables
             if (result_var.Success)
@@ -1094,7 +1230,6 @@ namespace CNote
                 }
             }
 
-
             //find as
             if (result_as.Success)
             {
@@ -1103,7 +1238,29 @@ namespace CNote
                 {
                     NewAddedItems.Add(str);
                     AutoCompMenu1.AddItem(str);
-                } 
+                }
+            }
+
+            //find defs
+            if (result_func.Success)
+            {
+                var str = result_func.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                    NewAddedItems.Add(str);
+                    AutoCompMenu1.AddItem(str);
+                }
+            }
+
+            //find classes
+            if (result_class.Success)
+            {
+                var str = result_class.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                    NewAddedItems.Add(str);
+                    AutoCompMenu1.AddItem(str);
+                }
             }
 
 
@@ -1132,39 +1289,31 @@ namespace CNote
 
         }
 
-
         //custom python syn highlight
         private void PythonSynHighligt(TextChangedEventArgs e)
         {
-
-            Regex reg = new Regex(@"#.*$", RegexOptions.Multiline);
-            Regex reg_func = new Regex(@"\.([a-zA-Z]+(\(\))?)", RegexOptions.Multiline);
-
-            
-
-
-            e.ChangedRange.ClearStyle(graystyle);
+           
             e.ChangedRange.ClearStyle(pyOrange);
             e.ChangedRange.ClearStyle(pyOrangeRed);
             e.ChangedRange.ClearStyle(pyPurple);
-            e.ChangedRange.ClearStyle(greenstyle);
             e.ChangedRange.ClearStyle(pyBlue);
-
-
-
-            e.ChangedRange.SetStyle(graystyle, reg);
+            e.ChangedRange.ClearStyle(pyLightGreen);
+            e.ChangedRange.ClearStyle(pyclassorange);
+            e.ChangedRange.ClearStyle(graystyle);
+            e.ChangedRange.ClearStyle(greenstyle);
+           
             e.ChangedRange.SetStyle(pyOrange, util.pyHLSecOrange);
             e.ChangedRange.SetStyle(pyOrangeRed, util.pyHLSecOrangeRed);
             e.ChangedRange.SetStyle(pyBlue, util.pyHLSecFuncs);
 
             e.ChangedRange.SetStyle(pyBlue, reg_func);
-
+            e.ChangedRange.SetStyle(pyLightGreen, reg_user_func);
+            e.ChangedRange.SetStyle(pyclassorange, reg_user_class);
 
             e.ChangedRange.SetStyle(pyPurple, util.pyHLmains);
-
+            e.ChangedRange.SetStyle(graystyle, reg);
             e.ChangedRange.SetStyle(greenstyle, util.pyHLstr);
-
-
+           
         }
 
 
@@ -1204,24 +1353,7 @@ namespace CNote
         //Show Cmd output panel
         private void showOutPanel_Click(object sender, EventArgs e)
         {
-            SplitContainer.Panel2Collapsed = false;
-        }
-
-
-        //Auto indent for Python 
-        private void fctb_main_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                stat_txt.Text = GetEditInfo();
-                if (python_lang.Checked && pyDoIndent)
-                {
-                    var line = fctb_main.Selection.FromLine;
-                    fctb_main.Selection.tb.InsertText("\t");
-                    pyDoIndent = false;
-                }
-
-            }
+            SplitContainer.Panel2Collapsed = SplitContainer.Panel2Collapsed == true ? false : true;
         }
 
 
@@ -1248,7 +1380,7 @@ namespace CNote
                     fctb_main.Text = FileReader(filenames[0]);
                     this.Text = currFileName + " - CNote";
                     fctb_main.ClearStylesBuffer();
-                    validateLang();
+                    FileSetup();
                 }
 
             }
@@ -1309,6 +1441,7 @@ namespace CNote
         private void cancelRunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             stop_proc();
+            stat_txt.Text = GetEditInfo();
         }
 
 
@@ -1335,6 +1468,94 @@ namespace CNote
 
         }
 
+        private void undoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            fctb_main.Undo();
+        }
+
+        private void run_strip_menu_Click(object sender, EventArgs e)
+        {
+            RunClicked();
+        }
+
+        private void opencnt_folder_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(currFilePath) && Directory.Exists(Path.GetDirectoryName(currFilePath)))
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = Path.GetDirectoryName(currFilePath),
+                    UseShellExecute = true,
+                    Verb = "open"
+                });
+            }
+        }
+
+
+        //Auto indent for Python and info
+        private void fctb_main_KeyPressed(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                stat_txt.Text = GetEditInfo();
+                if (python_lang.Checked && pyDoIndent)
+                {
+                    var line = fctb_main.Selection.FromLine;
+                    fctb_main.Selection.tb.InsertText("\t");
+                    pyDoIndent = false;
+                }
+            }
+            if (e.KeyChar == (char)Keys.Back)
+            {
+                stat_txt.Text = GetEditInfo();
+
+            }
+
+
+
+        }
+
+        private void fctb_main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                stat_txt.Text = GetEditInfo();
+
+            }
+
+            if (e.KeyCode == Keys.Down)
+            {
+                stat_txt.Text = GetEditInfo();
+
+            }
+
+            if (e.Control)
+            {
+                isctrlDown = true;
+                stat_txt.Text = GetEditInfo();
+            }
+
+            //if (e.Control && e.KeyCode == Keys.L)
+            //{
+            //    //fctb_main.Selection.tb.Text = "#" + fctb_main.Selection.tb.Text;
+            //    fctb_main.CommentSelected();
+            //}
+
+        }
+
+        private void fctb_main_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                isctrlDown = false;
+                stat_txt.Text = GetEditInfo();
+            }
+        }
+
+        private void commentSelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fctb_main.CommentSelected();
+        }
     }
 
 }

@@ -33,25 +33,22 @@ namespace CNote
             this.browser_radio = new System.Windows.Forms.RadioButton();
             this.default_radio = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.open_file_select = new System.Windows.Forms.Button();
             this.python_path = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.apply_btn = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.browser_radio);
-            this.groupBox1.Controls.Add(this.default_radio);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.open_file_select);
             this.groupBox1.Controls.Add(this.python_path);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(536, 109);
+            this.groupBox1.Size = new System.Drawing.Size(548, 62);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Paths";
@@ -59,7 +56,7 @@ namespace CNote
             // browser_radio
             // 
             this.browser_radio.AutoSize = true;
-            this.browser_radio.Location = new System.Drawing.Point(166, 51);
+            this.browser_radio.Location = new System.Drawing.Point(161, 77);
             this.browser_radio.Name = "browser_radio";
             this.browser_radio.Size = new System.Drawing.Size(63, 17);
             this.browser_radio.TabIndex = 6;
@@ -71,7 +68,7 @@ namespace CNote
             // default_radio
             // 
             this.default_radio.AutoSize = true;
-            this.default_radio.Location = new System.Drawing.Point(101, 51);
+            this.default_radio.Location = new System.Drawing.Point(96, 77);
             this.default_radio.Name = "default_radio";
             this.default_radio.Size = new System.Drawing.Size(59, 17);
             this.default_radio.TabIndex = 5;
@@ -84,25 +81,16 @@ namespace CNote
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(7, 51);
+            this.label3.Location = new System.Drawing.Point(2, 77);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "HTML Preview";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 90);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "More coming soon";
-            // 
             // open_file_select
             // 
             this.open_file_select.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.open_file_select.Location = new System.Drawing.Point(488, 19);
+            this.open_file_select.Location = new System.Drawing.Point(509, 19);
             this.open_file_select.Name = "open_file_select";
             this.open_file_select.Size = new System.Drawing.Size(32, 23);
             this.open_file_select.TabIndex = 2;
@@ -113,9 +101,9 @@ namespace CNote
             // python_path
             // 
             this.python_path.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.python_path.Location = new System.Drawing.Point(79, 19);
+            this.python_path.Location = new System.Drawing.Point(120, 19);
             this.python_path.Name = "python_path";
-            this.python_path.Size = new System.Drawing.Size(403, 20);
+            this.python_path.Size = new System.Drawing.Size(383, 20);
             this.python_path.TabIndex = 1;
             this.python_path.TextChanged += new System.EventHandler(this.python_path_TextChanged);
             // 
@@ -125,16 +113,42 @@ namespace CNote
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(7, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.Size = new System.Drawing.Size(116, 16);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Python Path";
+            this.label1.Text = "Python Executable";
+            // 
+            // apply_btn
+            // 
+            this.apply_btn.Location = new System.Drawing.Point(390, 96);
+            this.apply_btn.Name = "apply_btn";
+            this.apply_btn.Size = new System.Drawing.Size(75, 23);
+            this.apply_btn.TabIndex = 7;
+            this.apply_btn.Text = "Apply";
+            this.apply_btn.UseVisualStyleBackColor = true;
+            this.apply_btn.Click += new System.EventHandler(this.apply_btn_Click);
+            // 
+            // button2
+            // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button2.Location = new System.Drawing.Point(471, 96);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // LangPref
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 144);
+            this.ClientSize = new System.Drawing.Size(558, 131);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.apply_btn);
+            this.Controls.Add(this.browser_radio);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.default_radio);
+            this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -145,6 +159,7 @@ namespace CNote
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -154,9 +169,10 @@ namespace CNote
         private System.Windows.Forms.TextBox python_path;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button open_file_select;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton browser_radio;
         private System.Windows.Forms.RadioButton default_radio;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button apply_btn;
+        private System.Windows.Forms.Button button2;
     }
 }

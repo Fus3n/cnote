@@ -6,15 +6,12 @@ CNote is a simple and fast editor for quick needs, it has built-in AutoComplete 
 # ScreenShots
 
 ## Syntax highlighting
-![Syntax](https://github.com/Fus3n/cnote/blob/main/imgs/img%20(1).png?raw=true)
-
-## Dark Mode
-![DarkMode](https://github.com/Fus3n/cnote/blob/main/imgs/img%20(2).png?raw=true)
+![Syntax](https://github.com/Fus3n/cnote/blob/main/imgs/img3.png?raw=true).png?raw=true)
 
 ## AutoComplete 
-![AutoCompletet](https://github.com/Fus3n/cnote/blob/main/imgs/img%20(3).png?raw=true)
+![AutoCompletet/Dark Theme](https://github.com/Fus3n/cnote/blob/main/imgs/img1.png?raw=true).png?raw=true)
 
 ## Live HTML Preview
-![LiveHTMLPreview](https://github.com/Fus3n/cnote/blob/main/imgs/img%20(4).png)
+![LiveHTMLPreview](https://github.com/Fus3n/cnote/blob/main/imgs/img2.png?raw=true)
 
 

@@ -30,15 +30,17 @@ namespace CNote
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.browser_radio = new System.Windows.Forms.RadioButton();
-            this.default_radio = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
             this.open_file_select = new System.Windows.Forms.Button();
             this.python_path = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.browser_radio = new System.Windows.Forms.RadioButton();
+            this.default_radio = new System.Windows.Forms.RadioButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.apply_btn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -51,41 +53,7 @@ namespace CNote
             this.groupBox1.Size = new System.Drawing.Size(548, 62);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Paths";
-            // 
-            // browser_radio
-            // 
-            this.browser_radio.AutoSize = true;
-            this.browser_radio.Location = new System.Drawing.Point(161, 77);
-            this.browser_radio.Name = "browser_radio";
-            this.browser_radio.Size = new System.Drawing.Size(63, 17);
-            this.browser_radio.TabIndex = 6;
-            this.browser_radio.TabStop = true;
-            this.browser_radio.Text = "Browser";
-            this.browser_radio.UseVisualStyleBackColor = true;
-            this.browser_radio.CheckedChanged += new System.EventHandler(this.browser_radio_CheckedChanged);
-            // 
-            // default_radio
-            // 
-            this.default_radio.AutoSize = true;
-            this.default_radio.Location = new System.Drawing.Point(96, 77);
-            this.default_radio.Name = "default_radio";
-            this.default_radio.Size = new System.Drawing.Size(59, 17);
-            this.default_radio.TabIndex = 5;
-            this.default_radio.TabStop = true;
-            this.default_radio.Text = "Default";
-            this.default_radio.UseVisualStyleBackColor = true;
-            this.default_radio.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(2, 77);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 16);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "HTML Preview";
+            this.groupBox1.Text = "Python";
             // 
             // open_file_select
             // 
@@ -117,9 +85,44 @@ namespace CNote
             this.label1.TabIndex = 0;
             this.label1.Text = "Python Executable";
             // 
+            // browser_radio
+            // 
+            this.browser_radio.AutoSize = true;
+            this.browser_radio.Location = new System.Drawing.Point(165, 15);
+            this.browser_radio.Name = "browser_radio";
+            this.browser_radio.Size = new System.Drawing.Size(63, 17);
+            this.browser_radio.TabIndex = 6;
+            this.browser_radio.TabStop = true;
+            this.browser_radio.Text = "Browser";
+            this.browser_radio.UseVisualStyleBackColor = true;
+            this.browser_radio.CheckedChanged += new System.EventHandler(this.browser_radio_CheckedChanged);
+            // 
+            // default_radio
+            // 
+            this.default_radio.AutoSize = true;
+            this.default_radio.Location = new System.Drawing.Point(100, 15);
+            this.default_radio.Name = "default_radio";
+            this.default_radio.Size = new System.Drawing.Size(59, 17);
+            this.default_radio.TabIndex = 5;
+            this.default_radio.TabStop = true;
+            this.default_radio.Text = "Default";
+            this.default_radio.UseVisualStyleBackColor = true;
+            this.default_radio.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(6, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 16);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "HTML Preview";
+            // 
             // apply_btn
             // 
-            this.apply_btn.Location = new System.Drawing.Point(390, 96);
+            this.apply_btn.Enabled = false;
+            this.apply_btn.Location = new System.Drawing.Point(397, 152);
             this.apply_btn.Name = "apply_btn";
             this.apply_btn.Size = new System.Drawing.Size(75, 23);
             this.apply_btn.TabIndex = 7;
@@ -129,8 +132,8 @@ namespace CNote
             // 
             // button2
             // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button2.Location = new System.Drawing.Point(471, 96);
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button2.Location = new System.Drawing.Point(478, 152);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 8;
@@ -138,17 +141,28 @@ namespace CNote
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.default_radio);
+            this.groupBox2.Controls.Add(this.browser_radio);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(5, 80);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(548, 62);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "HTML";
+            // 
             // LangPref
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 131);
+            this.ClientSize = new System.Drawing.Size(558, 182);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.apply_btn);
-            this.Controls.Add(this.browser_radio);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.default_radio);
-            this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -158,8 +172,9 @@ namespace CNote
             this.Load += new System.EventHandler(this.LangPref_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -174,5 +189,6 @@ namespace CNote
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button apply_btn;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

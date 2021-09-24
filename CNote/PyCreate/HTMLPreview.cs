@@ -18,27 +18,16 @@ namespace CNote
         public HTMLPreview()
         {
             InitializeComponent();
-            webBrowser1.AllowNavigation = true;
-            webBrowser1.AllowWebBrowserDrop = true;
-
-
+     
 
         }
 
 
-        public void LoadDoc(string f)
+        public void LoadDoc(string path)
         {
-            try
-            {
-                webBrowser1.DocumentText = FileReader(f);
-               
-              
-            }
-            catch
-            {
-                webBrowser1.DocumentText = f;
-            }
-            
+
+            browser.Navigate(new Uri(String.Format("file:///{0}", path)));
+            this.Text = $"HTML Preview - {Path.GetFileName(path)}";
             
         }
 
@@ -53,13 +42,10 @@ namespace CNote
 
         private void HTMLPreview_Load(object sender, EventArgs e)
         {
+                     
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void HTMLPreview_FormClosing(object sender, FormClosingEventArgs e)
         {

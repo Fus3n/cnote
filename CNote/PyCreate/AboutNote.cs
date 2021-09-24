@@ -13,7 +13,7 @@ namespace CNote
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/Fus3n/cnote");
+            Process.Start("https://fus3n.github.io/cnote/");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,6 +34,11 @@ namespace CNote
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/Fus3n/cnote");
         }
     }
 }

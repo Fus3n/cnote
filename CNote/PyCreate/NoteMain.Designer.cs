@@ -41,6 +41,7 @@ namespace CNote
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.newWindowtool = new System.Windows.Forms.ToolStripMenuItem();
             this.closeWindowtool = new System.Windows.Forms.ToolStripMenuItem();
+            this.prev_window_tool = new System.Windows.Forms.ToolStripMenuItem();
             this.edit_tools = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,7 +148,8 @@ namespace CNote
             this.exitToolStripMenuItem,
             this.toolStripSeparator4,
             this.newWindowtool,
-            this.closeWindowtool});
+            this.closeWindowtool,
+            this.prev_window_tool});
             this.file_tools.Name = "file_tools";
             this.file_tools.Size = new System.Drawing.Size(39, 21);
             this.file_tools.Text = "File";
@@ -156,7 +158,7 @@ namespace CNote
             // 
             this.new_tools.Name = "new_tools";
             this.new_tools.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.new_tools.Size = new System.Drawing.Size(198, 22);
+            this.new_tools.Size = new System.Drawing.Size(218, 22);
             this.new_tools.Text = "New";
             this.new_tools.Click += new System.EventHandler(this.new_tools_Click);
             // 
@@ -164,7 +166,7 @@ namespace CNote
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -172,7 +174,7 @@ namespace CNote
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -181,7 +183,7 @@ namespace CNote
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -189,7 +191,7 @@ namespace CNote
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.End)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -198,21 +200,29 @@ namespace CNote
             this.toolStripSeparator4.BackColor = System.Drawing.Color.Transparent;
             this.toolStripSeparator4.ForeColor = System.Drawing.SystemColors.ActiveBorder;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(215, 6);
             // 
             // newWindowtool
             // 
             this.newWindowtool.Name = "newWindowtool";
-            this.newWindowtool.Size = new System.Drawing.Size(198, 22);
+            this.newWindowtool.Size = new System.Drawing.Size(218, 22);
             this.newWindowtool.Text = "New Window";
             this.newWindowtool.Click += new System.EventHandler(this.newWindowtool_Click);
             // 
             // closeWindowtool
             // 
             this.closeWindowtool.Name = "closeWindowtool";
-            this.closeWindowtool.Size = new System.Drawing.Size(198, 22);
+            this.closeWindowtool.Size = new System.Drawing.Size(218, 22);
             this.closeWindowtool.Text = "Close Window";
             this.closeWindowtool.Click += new System.EventHandler(this.closeWindowtool_Click);
+            // 
+            // prev_window_tool
+            // 
+            this.prev_window_tool.Name = "prev_window_tool";
+            this.prev_window_tool.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
+            this.prev_window_tool.Size = new System.Drawing.Size(218, 22);
+            this.prev_window_tool.Text = "Previous Window";
+            this.prev_window_tool.Click += new System.EventHandler(this.prev_window_tool_Click);
             // 
             // edit_tools
             // 
@@ -815,6 +825,7 @@ namespace CNote
             this.cmdout.Size = new System.Drawing.Size(937, 107);
             this.cmdout.TabIndex = 1;
             this.cmdout.Zoom = 100;
+            this.cmdout.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cmdout_KeyDown);
             // 
             // AutoCompMenu1
             // 
@@ -856,6 +867,7 @@ namespace CNote
             this.Text = "CNote";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NoteMain_FormClosing);
             this.Load += new System.EventHandler(this.NoteMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NoteMain_KeyDown);
             this.menu_bar2.ResumeLayout(false);
             this.menu_bar2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb_main)).EndInit();
@@ -949,6 +961,7 @@ namespace CNote
         private System.Windows.Forms.ToolStripMenuItem run_strip_menu;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem commentSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem prev_window_tool;
     }
 }
 

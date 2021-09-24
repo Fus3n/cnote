@@ -24,7 +24,7 @@ namespace CNote
        
         private void LangPref_Load(object sender, EventArgs e)
         {
-            apply_btn.Enabled = false;
+           
             if (!string.IsNullOrEmpty(util.GetSettings("pypath")))
             {
                 python_path.AppendText(util.GetSettings("pypath"));
@@ -34,7 +34,7 @@ namespace CNote
                 default_radio.Checked = true;
             else if (util.GetSettings("htmlpref") == "browser")
                 browser_radio.Checked = true;
-
+            apply_btn.Enabled = false;
         }
 
         private void python_path_TextChanged(object sender, EventArgs e)
@@ -92,7 +92,7 @@ namespace CNote
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+        
         }
     }
 }

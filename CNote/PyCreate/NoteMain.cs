@@ -29,17 +29,11 @@ namespace CNote
         //total all files 1775 lines
         private Process pProcess;
 
-        private TextStyle greenstyle = new TextStyle(Brushes.Green, null, FontStyle.Bold);
-        private TextStyle graystyle = new TextStyle(Brushes.Gray, null, FontStyle.Bold);
-        private TextStyle pyPurple = new TextStyle(Brushes.MediumPurple, null, FontStyle.Bold);
-        private TextStyle pyOrange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
-        private TextStyle pyOrangeRed = new TextStyle(Brushes.OrangeRed, null, FontStyle.Bold);
-        private TextStyle pyBlue = new TextStyle(Brushes.CornflowerBlue, null, FontStyle.Bold);
+       
 
-        private TextStyle pyLightGreen = new TextStyle(Brushes.DarkCyan, null, FontStyle.Bold);
-        private TextStyle pyclassorange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
-
-
+        /// form1
+        List<NoteMain> ins_list = new List<NoteMain>();
+        private int curr_ins_index = 0;
 
         //for python dynamic autocomplete
         //used to store items and remove them if they are removed from editor
@@ -48,6 +42,7 @@ namespace CNote
         private bool pyDoIndent; //python do auto indent if regex pattern found
         private bool TextChangedFCTB; //check if text changed used to add * in the title 
         private bool isPythonLang; //check if python is selected in language
+        private bool isPyLibLoaded;
 
         private HTMLPreview hm = new HTMLPreview();
         private Thread proc_thread;//Python Procces Thread
@@ -58,16 +53,15 @@ namespace CNote
         private string currFilePath;
         private string[] args;
 
-        private bool isctrlDown = false;
 
         private List<string> lns;
-        private bool isProccesRunning;
 
         Regex reg = new Regex(@"#.*$", RegexOptions.Multiline);
         Regex reg_func = new Regex(@"\.([a-zA-Z0-9_]+(\(\))?)", RegexOptions.Multiline);
         Regex reg_user_func = new Regex(@"\bdef\s([a-zA-Z0-9_]+)", RegexOptions.Multiline);
         Regex reg_user_class = new Regex(@"\bclass\s([a-zA-Z0-9_]+)", RegexOptions.Multiline);
 
+      
 
         public NoteMain()
         {
@@ -83,7 +77,6 @@ namespace CNote
         public void intitThread()
         {
             proc_thread = new Thread(startCmdPython);
-            isProccesRunning = false;
         }
 
 
@@ -138,7 +131,6 @@ namespace CNote
         //init some settings
         private void InitSettings()
         {
-
             string pyPath = util.GetPythonPath();
             if (string.IsNullOrEmpty(pyPath))
                 util.AOUSettings("pypath", "python");
@@ -173,18 +165,20 @@ namespace CNote
                 {
                     LightMode();
                 }
-
             }
+
+            
         }
 
         //Create New File
         private void new_tools_Click(object sender, EventArgs e)
         {
             fctb_main.Clear();
-            currFileName = "";
+            currFileName = "untitled";
             currFilePath = "";
             TextChangedFCTB = false;
             pyDoIndent = false;
+            this.Text = currFileName + " - CNote";
         }
 
         //Open File Dialog Depen
@@ -238,10 +232,13 @@ namespace CNote
 
             if (!txt_file.Checked)
             {
+                string prevclip = Clipboard.GetText();
                 fctb_main.SelectAll();
                 fctb_main.Cut();
                 fctb_main.Paste();
                 Clipboard.Clear();
+                if (!string.IsNullOrEmpty(prevclip))
+                    Clipboard.SetText(prevclip);
                 SaveFileAll();
 
             }
@@ -420,7 +417,7 @@ namespace CNote
         //exit..
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         //uh
@@ -587,7 +584,6 @@ namespace CNote
         }
 
 
-
         //Context Menu Items
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -679,6 +675,7 @@ namespace CNote
         private void python_lang_Click(object sender, EventArgs e)
         {
             autocheckstrip(sender);
+            LoadLibsPy();
             isPythonLang = true;
             fctb_main.Language = Language.Custom;
             languageChanger.Text = "Python";
@@ -686,6 +683,7 @@ namespace CNote
             AutoCompMenu1.Items = util.python_items;
             run_strip_menu.Enabled = true;
             fctb_main.CommentPrefix = "#";
+           
         }
 
         private void cshapr_lang_Click(object sender, EventArgs e)
@@ -790,6 +788,60 @@ namespace CNote
             fctb_main.CommentPrefix = "";
         }
 
+ 
+
+
+        private void LoadLibsPy()
+        {
+           if (isPyLibLoaded == false)
+            {
+                if ((!string.IsNullOrEmpty(util.GetPythonPath()) && util.GetPythonPath().Contains("\\"))) // check if saved python path contains slash 
+                {
+
+                    string import_path = $"{Path.GetDirectoryName(util.GetPythonPath())}\\Lib\\site-packages\\";
+                    string import_path_inbuilt = $"{Path.GetDirectoryName(util.GetPythonPath())}\\Lib\\";
+                    if (Directory.Exists(import_path))
+                    {
+                        List<string> tempLi = new List<string>();
+                        string[] directories_user = Directory.GetDirectories(import_path);
+                        string[] directories_inbuilt = Directory.GetFiles(import_path_inbuilt);
+
+
+                        foreach (var item in util.python_items) // reasign old values from complete menu
+                        {
+                            tempLi.Add(item);
+                        }
+
+                        foreach (var dir in directories_user) // add the new upadated values|| !num_range.Any(dir.Contains) || !dir.Contains('.')
+                        {
+                            string foldername = Path.GetFileName(dir);
+                            if (!foldername.Contains("dist-info") && !foldername.Contains("egg-info") && !foldername.Contains('_') && !foldername.Contains('~'))
+                            {
+                                tempLi.Add(foldername);
+                            }
+                        }
+
+                        foreach (var file in directories_inbuilt) // add the new upadated values|| !num_range.Any(dir.Contains) || !dir.Contains('.')
+                        {
+                            string filename = Path.GetFileName(file);
+
+                            if (!filename.Contains("dist-info") && !filename.Contains("egg-info") && !filename.Contains('_') && !filename.Contains('~') && filename.EndsWith(".py") && !filename.EndsWith(".pyo"))
+                            {
+                                tempLi.Add(filename.Replace(".py", string.Empty));
+                            }
+
+                        }
+
+
+                        util.python_items = tempLi.ToArray();
+                        isPyLibLoaded = true;
+
+                    }
+
+                }
+            }
+           
+        }
 
 
         //Validate which language being written or opened in editor
@@ -809,6 +861,7 @@ namespace CNote
                     break;
                 case ".py":
                     autocheckstrip(python_lang);
+                    LoadLibsPy();
                     isPythonLang = true;
                     fctb_main.Language = Language.Custom;
                     languageChanger.Text = "Python";
@@ -940,12 +993,12 @@ namespace CNote
         {
             if (fctb_main.Language == Language.HTML)
             {
+                
                 if (util.GetSettings("htmlpref") == "default")
                 {
-                    if (string.IsNullOrEmpty(currFilePath))
+                    if (string.IsNullOrEmpty(currFilePath) && !File.Exists(currFilePath))
                     {
-                        hm.LoadDoc(fctb_main.Text);
-                        hm.Show();
+                        SaveDlg();
                     }
                     else
                     {
@@ -1179,17 +1232,19 @@ namespace CNote
         }
 
 
+        // -------- PYTHON STUFF --------- //
+
         //adding value to autocomplete dynamicly
         private void PyDynamicAC(string e)
         {
-
+            
             //Match result_var = Regex.Match(e, @"(^.*?(?=\=)"); // find any string before '='
 
             Match result_var = Regex.Match(e, @"(\b[a-zA-Z_]+)(\s?=)"); // find any string before '='
 
             Match result_import = Regex.Match(e, @"\bimport\s([a-zA-Z_0-9_]+)\s"); // find any value string 'import'
 
-            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z_0-9_]+)\s"); // find any value string 'from'
+            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z_0-9_/.]+)\s"); // find any value string 'from'
 
             Match result_as = Regex.Match(e, @"\bas\s([a-zA-Z_0-9_]*)\s"); // find any value string 'as'
 
@@ -1205,6 +1260,7 @@ namespace CNote
                 {
                     NewAddedItems.Add(str);
                     AutoCompMenu1.AddItem(str);
+                   
                 }
             }
 
@@ -1216,17 +1272,30 @@ namespace CNote
                 {
                     NewAddedItems.Add(str);
                     AutoCompMenu1.AddItem(str);
+                    PyDynamicImport(str);
+                   
+                    this.Invoke((MethodInvoker)delegate
+                    {
+
+                        cmdout.Text += "Imported";
+                    });
                 }
             }
 
             //find froms
             if (result_from.Success)
             {
-                var str = result_from.Groups[1].Value;
+                string str = result_from.Groups[1].Value;
+                if (str.Contains("."))
+                    str = str.Split('.').First();
+
                 if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
                 {
                     NewAddedItems.Add(str);
                     AutoCompMenu1.AddItem(str);
+                    PyDynamicImport(str);
+                    cmdout.Text += "fromorted";
+
                 }
             }
 
@@ -1270,7 +1339,7 @@ namespace CNote
                 //Removing values/variables from autocompletemenu that where removed from file Dynamicly
                 foreach (var it in NewAddedItems)
                 {
-                    if (AutoCompMenu1.Items.Contains(it) && !fctb_main.Text.Contains(it) && !string.IsNullOrWhiteSpace("it")) //if value contains in autocompmenu and not in editor
+                    if (AutoCompMenu1.Items.Contains(it) && !fctb_main.Text.Contains(it) && !string.IsNullOrWhiteSpace(it)) //if value contains in autocompmenu and not in editor
                     {
                         // reinserting values to AutocompMenu array without removed values
                         List<string> newl = new List<string>(); //temp list of string 
@@ -1292,29 +1361,135 @@ namespace CNote
         //custom python syn highlight
         private void PythonSynHighligt(TextChangedEventArgs e)
         {
+          
+            e.ChangedRange.ClearStyle(util.pyOrange);
+            e.ChangedRange.ClearStyle(util.pyOrangeRed);
+            e.ChangedRange.ClearStyle(util.pyPurple);
+            e.ChangedRange.ClearStyle(util.pyBlue);
+            e.ChangedRange.ClearStyle(util.pyLightGreen);
+            e.ChangedRange.ClearStyle(util.pyclassorange);
+            e.ChangedRange.ClearStyle(util.graystyle);
+            e.ChangedRange.ClearStyle(util.greenstyle);
            
-            e.ChangedRange.ClearStyle(pyOrange);
-            e.ChangedRange.ClearStyle(pyOrangeRed);
-            e.ChangedRange.ClearStyle(pyPurple);
-            e.ChangedRange.ClearStyle(pyBlue);
-            e.ChangedRange.ClearStyle(pyLightGreen);
-            e.ChangedRange.ClearStyle(pyclassorange);
-            e.ChangedRange.ClearStyle(graystyle);
-            e.ChangedRange.ClearStyle(greenstyle);
-           
-            e.ChangedRange.SetStyle(pyOrange, util.pyHLSecOrange);
-            e.ChangedRange.SetStyle(pyOrangeRed, util.pyHLSecOrangeRed);
-            e.ChangedRange.SetStyle(pyBlue, util.pyHLSecFuncs);
+            e.ChangedRange.SetStyle(util.pyOrange, util.pyHLSecOrange);
+            e.ChangedRange.SetStyle(util.pyOrangeRed, util.pyHLSecOrangeRed);
+            e.ChangedRange.SetStyle(util.pyBlue, util.pyHLSecFuncs);
 
-            e.ChangedRange.SetStyle(pyBlue, reg_func);
-            e.ChangedRange.SetStyle(pyLightGreen, reg_user_func);
-            e.ChangedRange.SetStyle(pyclassorange, reg_user_class);
+            e.ChangedRange.SetStyle(util.pyBlue, reg_func);
+            e.ChangedRange.SetStyle(util.pyLightGreen, reg_user_func);
+            e.ChangedRange.SetStyle(util.pyclassorange, reg_user_class);
 
-            e.ChangedRange.SetStyle(pyPurple, util.pyHLmains);
-            e.ChangedRange.SetStyle(graystyle, reg);
-            e.ChangedRange.SetStyle(greenstyle, util.pyHLstr);
+            e.ChangedRange.SetStyle(util.pyPurple, util.pyHLmains);
+            e.ChangedRange.SetStyle(util.graystyle, reg);
+            e.ChangedRange.SetStyle(util.greenstyle, util.pyHLstr);
            
         }
+
+
+
+        private void PyDynamicAC_Other(string e)
+        {
+
+            //Match result_var = Regex.Match(e, @"(^.*?(?=\=)"); // find any string before '='
+
+            Match result_var = Regex.Match(e, @"(\b[a-zA-Z_]+)(\s?=)"); // find any string before '='
+
+            Match result_import = Regex.Match(e, @"\bimport\s([a-zA-Z_0-9_]+)\s"); // find any value string 'import'
+
+            Match result_from = Regex.Match(e, @"\bfrom\s([a-zA-Z_0-9_]+)\s"); // find any value string 'from'
+
+            Match result_as = Regex.Match(e, @"\bas\s([a-zA-Z_0-9_]*)\s"); // find any value string 'as'
+
+            Match result_func = Regex.Match(e, @"\bdef\s([a-zA-Z0-9_]+)\(\)"); // find any value string 'def'
+
+            Match result_class = Regex.Match(e, @"\bclass\s([a-zA-Z0-9_]+)(:|\(\))"); // find any string after 'class'
+
+            //Find variables
+            if (result_var.Success)
+            {
+                var str = result_var.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                    if (!AutoCompMenu1.Items.Contains(str))
+                        AutoCompMenu1.AddItem(str);
+                }
+            }
+
+            //find Imports
+            if (result_import.Success)
+            {
+                var str = result_import.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                    if (!AutoCompMenu1.Items.Contains(str))
+                        AutoCompMenu1.AddItem(str);
+                }
+            }
+
+            //find as
+            if (result_as.Success)
+            {
+                var str = result_as.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+
+                    if (!AutoCompMenu1.Items.Contains(str))
+                        AutoCompMenu1.AddItem(str);
+                }
+            }
+
+            //find defs
+            if (result_func.Success)
+            {
+                var str = result_func.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                    if (!AutoCompMenu1.Items.Contains(str))
+                        AutoCompMenu1.AddItem(str);
+                }
+            }
+
+            //find classes
+            if (result_class.Success)
+            {
+                var str = result_class.Groups[1].Value;
+                if (!AutoCompMenu1.Items.Contains(str)) //if found string not inside autocompletemenu then add
+                {
+                   
+                    AutoCompMenu1.AddItem(str);
+
+                }
+            }
+  
+    
+        }
+
+        private void PyDynamicImport(string filename)
+        {
+            if (!string.IsNullOrEmpty(util.GetSettings("pypath")))
+            {
+                string filePath = Path.GetDirectoryName(util.GetSettings("pypath")) + "\\Lib\\" + filename + ".py";
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        var lines = File.ReadLines(filePath);
+                        foreach (var line in lines)
+                        {
+                            PyDynamicAC_Other(line);
+                            Debug.WriteLine(line);
+                        }
+                    }
+                    catch
+                    {}
+
+                }
+               
+            }
+          
+        }
+
+        // -------- END --------- //
 
 
         //save zoom value on zoom change
@@ -1362,7 +1537,7 @@ namespace CNote
         {
             LangPref lp = new LangPref();
 
-            lp.Show();
+            lp.ShowDialog();
         }
 
 
@@ -1398,7 +1573,7 @@ namespace CNote
 
             if (TextChangedFCTB && !string.IsNullOrEmpty(fctb_main.Text))
             {
-                DialogResult res = MessageBox.Show($"Do you want to save changes to {currFileName}?", "Title", MessageBoxButtons.YesNoCancel);
+                DialogResult res = MessageBox.Show($"Do you want to save changes to {currFileName}?", "CNote", MessageBoxButtons.YesNoCancel);
                 if (res == DialogResult.Cancel)
                 {
                     e.Cancel = true;
@@ -1427,7 +1602,9 @@ namespace CNote
         private void newWindowtool_Click(object sender, EventArgs e)
         {
             NoteMain newMain = new NoteMain();
+            ins_list.Add(newMain);
             newMain.Show();
+
         }
 
         //close current window
@@ -1458,7 +1635,6 @@ namespace CNote
         private void cmdout_cpy_Click(object sender, EventArgs e)
         {
             cmdout.Copy();
-            cmdout.Text = "cmd>";
         }
 
         private void aboutCNoteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1531,7 +1707,6 @@ namespace CNote
 
             if (e.Control)
             {
-                isctrlDown = true;
                 stat_txt.Text = GetEditInfo();
             }
 
@@ -1547,7 +1722,6 @@ namespace CNote
         {
             if (e.Control)
             {
-                isctrlDown = false;
                 stat_txt.Text = GetEditInfo();
             }
         }
@@ -1555,6 +1729,62 @@ namespace CNote
         private void commentSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fctb_main.CommentSelected();
+        }
+
+        private void cmdout_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode  == Keys.C)
+            {
+                cmdout.Copy();
+            }
+            if (e.Control && e.KeyCode == Keys.P)
+            {
+                cmdout.Paste();
+            }
+        }
+
+        private void NoteMain_KeyDown(object sender, KeyEventArgs e)
+        {
+
+
+        }
+
+        private void GetPreviousWindow()
+        {
+
+            if (curr_ins_index == 0)
+            {
+                if (ins_list.Count == 0)
+                {
+                    var form1 = Application.OpenForms[0];
+                    form1.BringToFront();
+                }
+                else
+                {
+                    ins_list[curr_ins_index].BringToFront();
+                    curr_ins_index++;
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    ins_list[curr_ins_index + 1].BringToFront();
+                }
+                catch
+                {
+                    var form1 = Application.OpenForms[0];
+                    form1.BringToFront();
+                    curr_ins_index--;
+                }
+            }
+
+        }
+
+        private void prev_window_tool_Click(object sender, EventArgs e)
+        {
+            GetPreviousWindow();
         }
     }
 

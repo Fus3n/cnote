@@ -8,24 +8,34 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FastColoredTextBoxNS;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 
 namespace CNote
 {
 
     public class CNoteUtils
     {
+        public TextStyle greenstyle = new TextStyle(Brushes.Green, null, FontStyle.Bold);
+        public TextStyle graystyle = new TextStyle(Brushes.Gray, null, FontStyle.Bold);
+        public TextStyle pyPurple = new TextStyle(Brushes.MediumPurple, null, FontStyle.Bold);
+        public TextStyle pyOrange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
+        public TextStyle pyOrangeRed = new TextStyle(Brushes.OrangeRed, null, FontStyle.Bold);
+        public TextStyle pyBlue = new TextStyle(Brushes.CornflowerBlue, null, FontStyle.Bold);
+
+        public TextStyle pyLightGreen = new TextStyle(Brushes.DarkCyan, null, FontStyle.Bold);
+        public TextStyle pyclassorange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
+
+        public TextStyle pymultiGreen = new TextStyle(Brushes.Green, null, FontStyle.Bold);
+
         public string allFileFilter = "Any File|*.*| Python File |*.py|CSharp File |*.cs| HTML File |*.html | PHP File |*.php|XML File |*.xml|SQL File |*.sql|LUA File |*.lua|JavaScript File |*.js*";
-
-        public string pyHLmains = @"\b(del|from|not|while|as|elif|or|with|assert|else|if|pass|yield|break|except|import|print|class|raise|continue|finally|return|def|for|lambda|try|as|globals|dict|list|sorted|format|filter|float|int|exec|except|bool)\b";
-
+        public string pyHLmains = @"\b(del|from|not|while|as|elif|or|with|assert|else|if|pass|yield|break|except|import|print|class|raise|continue|finally|return|def|for|lambda|try|as|globals|dict|list|sorted|format|filter|float|int|exec|except|bool|ord|all|as|)\b";
         public string pyHLSecOrange = @"\b(and|is|in|or)\b";
-
         public string pyHLSecOrangeRed = @"\b(True|False|global|self(\.?))\b";
-
         public string pyHLSecFuncs = @"\b(abs|pow|ord|open|eval|repr|reversed|round|set|setattr|format|slice|sorted|object|staticmethod|str|sum|tuple|str|bin|bytes|bytearray|hex|input|min|max|next|zip|len|map|types|vars|range|enumerate|round|compile|memroyview|del|group|super|__(\w+)__)\b";
 
         public string pyHLstr = "(\'(.*?)\'|\"(.*?)\")";

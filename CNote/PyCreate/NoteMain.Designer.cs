@@ -158,7 +158,7 @@ namespace CNote
             // 
             this.new_tools.Name = "new_tools";
             this.new_tools.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.new_tools.Size = new System.Drawing.Size(218, 22);
+            this.new_tools.Size = new System.Drawing.Size(198, 22);
             this.new_tools.Text = "New";
             this.new_tools.Click += new System.EventHandler(this.new_tools_Click);
             // 
@@ -166,7 +166,7 @@ namespace CNote
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -174,7 +174,7 @@ namespace CNote
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -183,7 +183,7 @@ namespace CNote
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -191,7 +191,7 @@ namespace CNote
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.End)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -200,19 +200,19 @@ namespace CNote
             this.toolStripSeparator4.BackColor = System.Drawing.Color.Transparent;
             this.toolStripSeparator4.ForeColor = System.Drawing.SystemColors.ActiveBorder;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(215, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
             // 
             // newWindowtool
             // 
             this.newWindowtool.Name = "newWindowtool";
-            this.newWindowtool.Size = new System.Drawing.Size(218, 22);
+            this.newWindowtool.Size = new System.Drawing.Size(198, 22);
             this.newWindowtool.Text = "New Window";
             this.newWindowtool.Click += new System.EventHandler(this.newWindowtool_Click);
             // 
             // closeWindowtool
             // 
             this.closeWindowtool.Name = "closeWindowtool";
-            this.closeWindowtool.Size = new System.Drawing.Size(218, 22);
+            this.closeWindowtool.Size = new System.Drawing.Size(198, 22);
             this.closeWindowtool.Text = "Close Window";
             this.closeWindowtool.Click += new System.EventHandler(this.closeWindowtool_Click);
             // 
@@ -220,8 +220,8 @@ namespace CNote
             // 
             this.prev_window_tool.Name = "prev_window_tool";
             this.prev_window_tool.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.prev_window_tool.Size = new System.Drawing.Size(218, 22);
-            this.prev_window_tool.Text = "Previous Window";
+            this.prev_window_tool.Size = new System.Drawing.Size(198, 22);
+            this.prev_window_tool.Text = "Next Window";
             this.prev_window_tool.Click += new System.EventHandler(this.prev_window_tool_Click);
             // 
             // edit_tools
@@ -814,7 +814,6 @@ namespace CNote
             this.cmdout.ContextMenuStrip = this.cmdoutMenu;
             this.cmdout.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.cmdout.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.cmdout.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.cmdout.IsReplaceMode = false;
             this.cmdout.Location = new System.Drawing.Point(-1, 3);
             this.cmdout.Name = "cmdout";
@@ -905,7 +904,6 @@ namespace CNote
         private System.Windows.Forms.ToolStripMenuItem lightm_toggle;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
         private FastColoredTextBoxNS.FastColoredTextBox fctb_main;
-        private System.Windows.Forms.ToolStripMenuItem wwrap_tool;
         private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem goToToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;

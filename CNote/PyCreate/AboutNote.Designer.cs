@@ -43,6 +43,7 @@ namespace CNote
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(397, 118);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -71,7 +72,7 @@ namespace CNote
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 17);
             this.label5.TabIndex = 6;
-            this.label5.Text = "Verson: 1.0.3";
+            this.label5.Text = "Verson: 1.0.4";
             // 
             // linkLabel2
             // 

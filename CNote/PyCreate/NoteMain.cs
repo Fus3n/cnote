@@ -61,8 +61,6 @@ namespace CNote
         Regex reg_user_func = new Regex(@"\bdef\s([a-zA-Z0-9_]+)", RegexOptions.Multiline);
         Regex reg_user_class = new Regex(@"\bclass\s([a-zA-Z0-9_]+)", RegexOptions.Multiline);
 
-      
-
         public NoteMain()
         {
             InitializeComponent();
@@ -85,20 +83,9 @@ namespace CNote
             opencnt_folder.Enabled = false;
             run_strip_menu.Enabled = false;
 
-            if (SplitContainer.Panel2Collapsed)
-            {
-
-            }
             cmdout.Zoom = 122;
             txt_file.Checked = true;
             languageChanger.Text = "Text File";
-
-            //int da = 0;
-            //foreach(var i in args)
-            //{
-            //    fctb_main.AppendText(da.ToString() + " "+ i + "\n");
-            //    da++;
-            //}
 
             if (args.Length >= 2 && !string.IsNullOrEmpty(args[1]))
             {
@@ -110,8 +97,6 @@ namespace CNote
             fctb_main.AllowDrop = true;
 
             fctb_main.Zoom = 122;
-
-
 
             SplitContainer.Panel2Collapsed = true;
 
@@ -256,7 +241,6 @@ namespace CNote
 
                     }
                 }).Start();
-
 
             }
 
@@ -1191,13 +1175,22 @@ namespace CNote
 
             if (fctb_main.IsChanged)
             {
-                // put * in title if file not saved after change
+                // put '*' in title if file not saved after change
 
                 TextChangedFCTB = true;
                 if (string.IsNullOrEmpty(currFilePath)) //check if file is saved or opend if not then adds untitled
                 {
-                    this.Text = "*" + "untitled" + " - CNote";
-                    currFileName = "untitled";
+                    if (string.IsNullOrEmpty(currFileName))
+                    {
+                        currFileName = "untitled";
+                        this.Text = currFileName + " - CNote";
+                    }
+                    else
+                    {
+                        currFileName = "untitled";
+                        this.Text = "*"+ currFileName + " - CNote";
+                    }
+                   
                 }
                 else
                 {
@@ -1361,16 +1354,22 @@ namespace CNote
         //custom python syn highlight
         private void PythonSynHighligt(TextChangedEventArgs e)
         {
-          
+            e.ChangedRange.ClearStyle(util.pyfuncParam);
+            e.ChangedRange.ClearStyle(util.pynums);
+
             e.ChangedRange.ClearStyle(util.pyOrange);
             e.ChangedRange.ClearStyle(util.pyOrangeRed);
             e.ChangedRange.ClearStyle(util.pyPurple);
             e.ChangedRange.ClearStyle(util.pyBlue);
             e.ChangedRange.ClearStyle(util.pyLightGreen);
             e.ChangedRange.ClearStyle(util.pyclassorange);
+            e.ChangedRange.ClearStyle(util.pyops);
             e.ChangedRange.ClearStyle(util.graystyle);
             e.ChangedRange.ClearStyle(util.greenstyle);
            
+
+            e.ChangedRange.SetStyle(util.pyfuncParam, util.pyHLparams);
+            e.ChangedRange.SetStyle(util.pynums, util.pyHLnums);
             e.ChangedRange.SetStyle(util.pyOrange, util.pyHLSecOrange);
             e.ChangedRange.SetStyle(util.pyOrangeRed, util.pyHLSecOrangeRed);
             e.ChangedRange.SetStyle(util.pyBlue, util.pyHLSecFuncs);
@@ -1380,9 +1379,15 @@ namespace CNote
             e.ChangedRange.SetStyle(util.pyclassorange, reg_user_class);
 
             e.ChangedRange.SetStyle(util.pyPurple, util.pyHLmains);
+
+            e.ChangedRange.SetStyle(util.pyops, util.pyHLops);
+
+
             e.ChangedRange.SetStyle(util.graystyle, reg);
             e.ChangedRange.SetStyle(util.greenstyle, util.pyHLstr);
            
+
+
         }
 
 
@@ -1756,8 +1761,8 @@ namespace CNote
             {
                 if (ins_list.Count == 0)
                 {
-                    var form1 = Application.OpenForms[0];
-                    form1.BringToFront();
+                    Application.OpenForms[0].BringToFront();
+                    
                 }
                 else
                 {

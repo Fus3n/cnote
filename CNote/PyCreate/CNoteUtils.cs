@@ -31,28 +31,44 @@ namespace CNote
         public TextStyle pyclassorange = new TextStyle(Brushes.Orange, null, FontStyle.Bold);
 
         public TextStyle pymultiGreen = new TextStyle(Brushes.Green, null, FontStyle.Bold);
+        public TextStyle pyfuncParam = new TextStyle(Brushes.SandyBrown, null, FontStyle.Bold);
+
+        public TextStyle pynums = new TextStyle(Brushes.DarkOrange, null, FontStyle.Bold);
+
+        public TextStyle pyops = new TextStyle(Brushes.Coral, null, FontStyle.Bold);
+
 
         public string allFileFilter = "Any File|*.*| Python File |*.py|CSharp File |*.cs| HTML File |*.html | PHP File |*.php|XML File |*.xml|SQL File |*.sql|LUA File |*.lua|JavaScript File |*.js*";
         public string pyHLmains = @"\b(del|from|not|while|as|elif|or|with|assert|else|if|pass|yield|break|except|import|print|class|raise|continue|finally|return|def|for|lambda|try|as|globals|dict|list|sorted|format|filter|float|int|exec|except|bool|ord|all|as|)\b";
         public string pyHLSecOrange = @"\b(and|is|in|or)\b";
         public string pyHLSecOrangeRed = @"\b(True|False|global|self(\.?))\b";
+
+        public string pyHLparams = @"(?<=\()[a-zA-Z_0-9, \n.'"":+-/%*=\{\}\[\]]+?(?=\))";
+        public string pyHLnums = @"[0-9]+";
+
+        public string pyHLops = @"[=+/%*-]+";
+
+
         public string pyHLSecFuncs = @"\b(abs|pow|ord|open|eval|repr|reversed|round|set|setattr|format|slice|sorted|object|staticmethod|str|sum|tuple|str|bin|bytes|bytearray|hex|input|min|max|next|zip|len|map|types|vars|range|enumerate|round|compile|memroyview|del|group|super|__(\w+)__)\b";
 
         public string pyHLstr = "(\'(.*?)\'|\"(.*?)\")";
 
 
         //CSharp Autocomplete items
-        public string[] cshapr_items = { "class", "private","public","protected","var","string","int","float","double","Double","void","return","foreach","while",
+        public string[] cshapr_items = { "class", "private","public","protected","var","string","int","float","double","Double","uint","int32","byte","sbyte","short","ushort","long","ulong","decimal",
+                                        "char","bool","DateTime","void","return","foreach","while","null","IDictionary","Dictionary","Stack","Hashtable","delegate","staic","Program","Stream","FileStream","MemoryStream","NetworkStream","PipeStream","CryptoStream","StreamWriter","StreamReader","BinaryWriter","BinaryReader","Environment","Append","remove","Open","ReadAllLines",
+                                        "Replace","File","Directory","Copy",
                                        "try","catch","namespace","Array","using","System","List","args","interface","Enum","async","await","Console","Write",
                                         "decimal","ToString()","EventArgs","object","WriteLine","Read","ReadLine","ReadKey","Error","Clear","in","ToString()",
-                                        "List<>","string[]","int[]","float[]","ForEach"};
+                                        "List<>","string[]","int[]","float[]","ForEach","ToUpper()","ToLower()","Trim","ToCharArray","Substring","StartsWith",
+                                        "Split","EndsWith","Square","new","object","true","false"};
 
         //Python Autocomplete items
         public string[] python_items = { "import", "from", "if", "else", "while", "True", "False", "pass", "global", "as", "not", "del", "break", "print", "class", "continue", "raise", "return", "finally", "def", "lambda", "try", "except", "yield", "assert", "with", "open", "as", "in", "and", "or",
                                         "abs()","bytes","classmethod()","chr","dict","compile()","dir","eval()","enumerate()","exec()","filter","float","format","forzenset","bytearray()","bool","bin","ascii","any","all","getattr","globals","hasattr","hex","input","int","isinstance","list","len()","iter","locals","map","max",
                                         "memroyview","min","next()","object","oct","ord","pow","math","property","range","repr","reversed","round","set","setattr","slice","sorted()","staticmethod","str","sum","super","tuple","types","vars","zip","__init__(self)","init","__repr__","__doc__","__getitem__","__module__","__name__","__file__","__dict__","__package__","__annotations__",
                                          "__slots__","__hash__","__nonzero__","__bool__","__next__","__qualname__","__defaults__","__code__","__globals__","__closure__","__kwdefaults__","__new__","__del__","__str__","","__bytes__","__format__","__lt__","__le__","__eq__","__ne__","__gt__","__ge__","__add__","__sub__","__mul__","__matmul__","__truediv__","__floordiv__","__abs__","__float__",
-                                          "__complex__","__round__","__trunc__","__ceil__","__floor__","__len__","__setitem__","__delitem__","__iter__","__floordiv__","__mod__","__truediv__","__pow__","__lshift__","__rshift__","__and__","__xor__","__or__","__iadd__","__isub__","__imul__","__idiv__","__ifloordiv__","__imod__","__ipow__","__iand__","__neg__","__pos__","__invert__","__int__","__long__","__float__","__oct__","__hex__"};
+                                          "__complex__","__round__","__trunc__","__ceil__","__floor__","__len__","__setitem__","__delitem__","__iter__","__floordiv__","__mod__","__truediv__","__pow__","__lshift__","__rshift__","__and__","__xor__","__or__","__iadd__","__isub__","__imul__","__idiv__","__ifloordiv__","__imod__","__ipow__","__iand__","__neg__","__pos__","__invert__","__int__","__long__","__float__","__oct__","__hex__","__main__","if __name__ == '__main__':"};
 
 
 

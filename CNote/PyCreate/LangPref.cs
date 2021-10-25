@@ -34,6 +34,12 @@ namespace CNote
                 default_radio.Checked = true;
             else if (util.GetSettings("htmlpref") == "browser")
                 browser_radio.Checked = true;
+
+            if (!string.IsNullOrEmpty(util.GetSettings("customCommand")))
+            {
+                custom_cmd.AppendText(util.GetSettings("customCommand"));
+            }
+
             apply_btn.Enabled = false;
         }
 
@@ -87,12 +93,33 @@ namespace CNote
             {
                 MessageBox.Show("The Path Does not exists", "CNote");
             }
+
+            if (custom_cmd.Text != "")
+            {
+                util.AOUSettings("customCommand", custom_cmd.Text);
+            }
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+        private void customcmd_help_Click(object sender, EventArgs e)
         {
-        
+            MessageBox.Show("You can directly execute cmd commands here '%1' is represented as current opened file and %bin is represted as the file wihtout extention. \nExamlple if you want to compile and run a c# file: 'csc %1 && %bin', \nThis does not work with python it will use its own settings", "Custom Command Help");
+        }
+
+        private void custom_cmd_TextChanged(object sender, EventArgs e)
+        {
+            apply_btn.Enabled = true;
+        }
+
+        private void html_help_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Choose where to open html file when Run is clicked", "HTML HELP");
+        }
+
+        private void python_help_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Choose python executable path", "Python HELP");
         }
     }
 }

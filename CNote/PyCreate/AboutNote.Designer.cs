@@ -72,7 +72,7 @@ namespace CNote
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 17);
             this.label5.TabIndex = 6;
-            this.label5.Text = "Verson: 1.0.4";
+            this.label5.Text = "Verson: 1.0.5";
             // 
             // linkLabel2
             // 

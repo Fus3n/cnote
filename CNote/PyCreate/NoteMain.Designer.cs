@@ -58,6 +58,7 @@ namespace CNote
             this.run_tools_parent = new System.Windows.Forms.ToolStripMenuItem();
             this.run_tools = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.build_config = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showOutPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@ namespace CNote
             this.lightm_toggle = new System.Windows.Forms.ToolStripMenuItem();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wrap_tool = new System.Windows.Forms.ToolStripMenuItem();
-            this.languagePreferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutCNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fctb_main = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -92,6 +92,7 @@ namespace CNote
             this.statusOptions = new System.Windows.Forms.StatusStrip();
             this.languageChanger = new System.Windows.Forms.ToolStripDropDownButton();
             this.python_lang = new System.Windows.Forms.ToolStripMenuItem();
+            this.cpp_lang = new System.Windows.Forms.ToolStripMenuItem();
             this.cshapr_lang = new System.Windows.Forms.ToolStripMenuItem();
             this.vb_lang = new System.Windows.Forms.ToolStripMenuItem();
             this.php_lang = new System.Windows.Forms.ToolStripMenuItem();
@@ -158,7 +159,7 @@ namespace CNote
             // 
             this.new_tools.Name = "new_tools";
             this.new_tools.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.new_tools.Size = new System.Drawing.Size(198, 22);
+            this.new_tools.Size = new System.Drawing.Size(234, 22);
             this.new_tools.Text = "New";
             this.new_tools.Click += new System.EventHandler(this.new_tools_Click);
             // 
@@ -166,7 +167,7 @@ namespace CNote
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -174,7 +175,7 @@ namespace CNote
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -183,7 +184,7 @@ namespace CNote
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -191,7 +192,7 @@ namespace CNote
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.End)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -200,19 +201,21 @@ namespace CNote
             this.toolStripSeparator4.BackColor = System.Drawing.Color.Transparent;
             this.toolStripSeparator4.ForeColor = System.Drawing.SystemColors.ActiveBorder;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(231, 6);
             // 
             // newWindowtool
             // 
             this.newWindowtool.Name = "newWindowtool";
-            this.newWindowtool.Size = new System.Drawing.Size(198, 22);
+            this.newWindowtool.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.N)));
+            this.newWindowtool.Size = new System.Drawing.Size(234, 22);
             this.newWindowtool.Text = "New Window";
             this.newWindowtool.Click += new System.EventHandler(this.newWindowtool_Click);
             // 
             // closeWindowtool
             // 
             this.closeWindowtool.Name = "closeWindowtool";
-            this.closeWindowtool.Size = new System.Drawing.Size(198, 22);
+            this.closeWindowtool.Size = new System.Drawing.Size(234, 22);
             this.closeWindowtool.Text = "Close Window";
             this.closeWindowtool.Click += new System.EventHandler(this.closeWindowtool_Click);
             // 
@@ -220,7 +223,7 @@ namespace CNote
             // 
             this.prev_window_tool.Name = "prev_window_tool";
             this.prev_window_tool.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.prev_window_tool.Size = new System.Drawing.Size(198, 22);
+            this.prev_window_tool.Size = new System.Drawing.Size(234, 22);
             this.prev_window_tool.Text = "Next Window";
             this.prev_window_tool.Click += new System.EventHandler(this.prev_window_tool_Click);
             // 
@@ -337,7 +340,8 @@ namespace CNote
             this.run_tools_parent.BackColor = System.Drawing.Color.Transparent;
             this.run_tools_parent.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.run_tools,
-            this.cancelRunToolStripMenuItem});
+            this.cancelRunToolStripMenuItem,
+            this.build_config});
             this.run_tools_parent.Name = "run_tools_parent";
             this.run_tools_parent.Size = new System.Drawing.Size(48, 21);
             this.run_tools_parent.Text = "Build";
@@ -346,17 +350,27 @@ namespace CNote
             // 
             this.run_tools.Name = "run_tools";
             this.run_tools.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.run_tools.Size = new System.Drawing.Size(196, 22);
+            this.run_tools.Size = new System.Drawing.Size(267, 22);
             this.run_tools.Text = "Run";
             this.run_tools.Click += new System.EventHandler(this.run_tools_Click_1);
             // 
             // cancelRunToolStripMenuItem
             // 
             this.cancelRunToolStripMenuItem.Name = "cancelRunToolStripMenuItem";
-            this.cancelRunToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Delete)));
-            this.cancelRunToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.cancelRunToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.X)));
+            this.cancelRunToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
             this.cancelRunToolStripMenuItem.Text = "Cancel Run";
             this.cancelRunToolStripMenuItem.Click += new System.EventHandler(this.cancelRunToolStripMenuItem_Click);
+            // 
+            // build_config
+            // 
+            this.build_config.Name = "build_config";
+            this.build_config.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D)));
+            this.build_config.Size = new System.Drawing.Size(267, 22);
+            this.build_config.Text = "Build Configuration";
+            this.build_config.Click += new System.EventHandler(this.build_config_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -390,8 +404,7 @@ namespace CNote
             this.option_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.theme_colorstrip,
             this.fontToolStripMenuItem,
-            this.wrap_tool,
-            this.languagePreferenceToolStripMenuItem});
+            this.wrap_tool});
             this.option_tools.Name = "option_tools";
             this.option_tools.Size = new System.Drawing.Size(66, 21);
             this.option_tools.Text = "Options";
@@ -402,7 +415,7 @@ namespace CNote
             this.darkm_toggle,
             this.lightm_toggle});
             this.theme_colorstrip.Name = "theme_colorstrip";
-            this.theme_colorstrip.Size = new System.Drawing.Size(199, 22);
+            this.theme_colorstrip.Size = new System.Drawing.Size(144, 22);
             this.theme_colorstrip.Text = "Theme";
             // 
             // darkm_toggle
@@ -424,23 +437,16 @@ namespace CNote
             // fontToolStripMenuItem
             // 
             this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.fontToolStripMenuItem.Text = "Font";
             this.fontToolStripMenuItem.Click += new System.EventHandler(this.fontToolStripMenuItem_Click);
             // 
             // wrap_tool
             // 
             this.wrap_tool.Name = "wrap_tool";
-            this.wrap_tool.Size = new System.Drawing.Size(199, 22);
+            this.wrap_tool.Size = new System.Drawing.Size(144, 22);
             this.wrap_tool.Text = "Word Wrap";
             this.wrap_tool.Click += new System.EventHandler(this.wrap_tool_Click);
-            // 
-            // languagePreferenceToolStripMenuItem
-            // 
-            this.languagePreferenceToolStripMenuItem.Name = "languagePreferenceToolStripMenuItem";
-            this.languagePreferenceToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.languagePreferenceToolStripMenuItem.Text = "Language Preference";
-            this.languagePreferenceToolStripMenuItem.Click += new System.EventHandler(this.languagePreferenceToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -514,7 +520,7 @@ namespace CNote
             this.fctb_main.Click += new System.EventHandler(this.fctb_main_Click);
             this.fctb_main.DragDrop += new System.Windows.Forms.DragEventHandler(this.fctb_main_DragDrop);
             this.fctb_main.DragEnter += new System.Windows.Forms.DragEventHandler(this.fctb_main_DragEnter);
-            this.fctb_main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fctb_main_KeyDown);
+            this.fctb_main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cmdout_KeyDown);
             this.fctb_main.KeyUp += new System.Windows.Forms.KeyEventHandler(this.fctb_main_KeyUp);
             // 
             // editContext
@@ -646,7 +652,7 @@ namespace CNote
             // txt_file
             // 
             this.txt_file.Name = "txt_file";
-            this.txt_file.Size = new System.Drawing.Size(135, 22);
+            this.txt_file.Size = new System.Drawing.Size(180, 22);
             this.txt_file.Text = "Text File";
             this.txt_file.Click += new System.EventHandler(this.txt_file_Click);
             // 
@@ -672,6 +678,7 @@ namespace CNote
             this.languageChanger.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.languageChanger.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.python_lang,
+            this.cpp_lang,
             this.cshapr_lang,
             this.vb_lang,
             this.php_lang,
@@ -693,70 +700,77 @@ namespace CNote
             // python_lang
             // 
             this.python_lang.Name = "python_lang";
-            this.python_lang.Size = new System.Drawing.Size(135, 22);
+            this.python_lang.Size = new System.Drawing.Size(180, 22);
             this.python_lang.Text = "Python";
             this.python_lang.Click += new System.EventHandler(this.python_lang_Click);
+            // 
+            // cpp_lang
+            // 
+            this.cpp_lang.Name = "cpp_lang";
+            this.cpp_lang.Size = new System.Drawing.Size(180, 22);
+            this.cpp_lang.Text = "C++";
+            this.cpp_lang.Click += new System.EventHandler(this.cpp_lang_Click);
             // 
             // cshapr_lang
             // 
             this.cshapr_lang.Name = "cshapr_lang";
-            this.cshapr_lang.Size = new System.Drawing.Size(135, 22);
+            this.cshapr_lang.Size = new System.Drawing.Size(180, 22);
             this.cshapr_lang.Text = "C#";
             this.cshapr_lang.Click += new System.EventHandler(this.cshapr_lang_Click);
             // 
             // vb_lang
             // 
             this.vb_lang.Name = "vb_lang";
-            this.vb_lang.Size = new System.Drawing.Size(135, 22);
+            this.vb_lang.Size = new System.Drawing.Size(180, 22);
             this.vb_lang.Text = "Visual Basic";
             this.vb_lang.Click += new System.EventHandler(this.vb_lang_Click);
             // 
             // php_lang
             // 
             this.php_lang.Name = "php_lang";
-            this.php_lang.Size = new System.Drawing.Size(135, 22);
+            this.php_lang.Size = new System.Drawing.Size(180, 22);
             this.php_lang.Text = "PHP";
             this.php_lang.Click += new System.EventHandler(this.php_lang_Click);
             // 
             // html_lang
             // 
             this.html_lang.Name = "html_lang";
-            this.html_lang.Size = new System.Drawing.Size(135, 22);
+            this.html_lang.Size = new System.Drawing.Size(180, 22);
             this.html_lang.Text = "HTML";
             this.html_lang.Click += new System.EventHandler(this.html_lang_Click);
             // 
             // xml_lang
             // 
             this.xml_lang.Name = "xml_lang";
-            this.xml_lang.Size = new System.Drawing.Size(135, 22);
+            this.xml_lang.Size = new System.Drawing.Size(180, 22);
             this.xml_lang.Text = "XML";
             this.xml_lang.Click += new System.EventHandler(this.xml_lang_Click);
             // 
             // lua_lang
             // 
             this.lua_lang.Name = "lua_lang";
-            this.lua_lang.Size = new System.Drawing.Size(135, 22);
+            this.lua_lang.Size = new System.Drawing.Size(180, 22);
             this.lua_lang.Text = "LUA";
             this.lua_lang.Click += new System.EventHandler(this.lua_lang_Click);
             // 
             // sql_lang
             // 
             this.sql_lang.Name = "sql_lang";
-            this.sql_lang.Size = new System.Drawing.Size(135, 22);
+            this.sql_lang.Size = new System.Drawing.Size(180, 22);
             this.sql_lang.Text = "SQL";
             this.sql_lang.Click += new System.EventHandler(this.sql_lang_Click);
             // 
             // js_lang
             // 
             this.js_lang.Name = "js_lang";
-            this.js_lang.Size = new System.Drawing.Size(135, 22);
+            this.js_lang.Size = new System.Drawing.Size(180, 22);
             this.js_lang.Text = "JavaScript";
             this.js_lang.Click += new System.EventHandler(this.js_lang_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // stat_txt
             // 
@@ -814,6 +828,7 @@ namespace CNote
             this.cmdout.ContextMenuStrip = this.cmdoutMenu;
             this.cmdout.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.cmdout.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.cmdout.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.cmdout.IsReplaceMode = false;
             this.cmdout.Location = new System.Drawing.Point(-1, 3);
             this.cmdout.Name = "cmdout";
@@ -839,6 +854,7 @@ namespace CNote
             this.AutoCompMenu1.MinFragmentLength = 1;
             this.AutoCompMenu1.SearchPattern = "\\w";
             this.AutoCompMenu1.TargetControlWrapper = null;
+            this.AutoCompMenu1.Selected += new System.EventHandler<AutocompleteMenuNS.SelectedEventArgs>(this.AutoCompMenu1_Selected);
             // 
             // panel1
             // 
@@ -866,7 +882,6 @@ namespace CNote
             this.Text = "CNote";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NoteMain_FormClosing);
             this.Load += new System.EventHandler(this.NoteMain_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NoteMain_KeyDown);
             this.menu_bar2.ResumeLayout(false);
             this.menu_bar2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb_main)).EndInit();
@@ -938,7 +953,6 @@ namespace CNote
         private System.Windows.Forms.ToolStripMenuItem run_tools;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem1;
         private AutocompleteMenuNS.AutocompleteMenu AutoCompMenu1;
-        private System.Windows.Forms.ToolStripMenuItem languagePreferenceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelRunToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -960,6 +974,8 @@ namespace CNote
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem commentSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem prev_window_tool;
+        private System.Windows.Forms.ToolStripMenuItem build_config;
+        private System.Windows.Forms.ToolStripMenuItem cpp_lang;
     }
 }
 
